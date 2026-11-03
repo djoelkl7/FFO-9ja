@@ -2,10 +2,17 @@
 # Naija Pot Kitchen & Grill Ltd — Production cPanel / Apache Configuration
 # ==============================================================================
 
+# Ensure index.html is default directory index
+DirectoryIndex index.html
+
+# Prevent MultiViews from interfering with rewrite rules
+<IfModule mod_negotiation.c>
+  Options -MultiViews
+</IfModule>
+
 # 1. Enable Rewrite Engine & Handle SPA Routing Fallback
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
 
   # Optional: Enforce HTTPS (Uncomment the 2 lines below if SSL is active on your domain)
   # RewriteCond %{HTTPS} off
@@ -75,11 +82,11 @@
 # 5. Security Headers
 <IfModule mod_headers.c>
   # Prevent MIME type sniffing
-  Header set X-Content-Type-Options "nosniff"
+  Header always set X-Content-Type-Options "nosniff"
   # Protect against clickjacking
-  Header set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Frame-Options "SAMEORIGIN"
   # Referrer policy
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
   # Ensure index.html is never cached stale by browsers
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
