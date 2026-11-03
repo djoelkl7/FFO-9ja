@@ -16,9 +16,13 @@ console.log('====================================================');
 console.log('📦  NAIJA POT KITCHEN & GRILL — cPanel Packager');
 console.log('====================================================\n');
 
-// 1. Run production build
+// 1. Run production build with relative paths for cPanel
 console.log('1️⃣  Building production assets with Vite...');
-execSync('npm run build', { stdio: 'inherit', cwd: rootDir });
+execSync('npm run build', {
+  stdio: 'inherit',
+  cwd: rootDir,
+  env: { ...process.env, VITE_BASE_URL: './' },
+});
 
 // 2. Ensure .htaccess is in dist
 const htaccessPublic = path.join(rootDir, 'public', '.htaccess');

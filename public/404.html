@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Naija Pot Kitchen & Grill Ltd</title>
+  <script>
+    // GitHub Pages 404 Fallback: Redirect path routes into hash routes
+    (function() {
+      var pathname = window.location.pathname;
+      var repoPrefix = '/FFO-9ja';
+      var subpath = pathname.startsWith(repoPrefix) ? pathname.slice(repoPrefix.length) : pathname;
+      subpath = subpath.replace(/^\/+|\/+$/g, '');
+      var base = pathname.startsWith(repoPrefix) ? repoPrefix + '/' : '/';
+      var target = base + (subpath ? '#' + subpath : '') + window.location.search + window.location.hash;
+      window.location.replace(target);
+    })();
+  </script>
+</head>
+<body style="background:#090a08;color:#f6f0e4;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
+  <p>Loading Naija Pot Kitchen &amp; Grill...</p>
+</body>
+</html>
