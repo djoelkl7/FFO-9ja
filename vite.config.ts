@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '.FFO-9ja', // CRITICAL for GitHub Pages: enables relative asset paths so page isn't white
+  base: './FFO-9ja', // CRITICAL for GitHub Pages: enables relative asset paths so page isn't white
   server: {
     host: '0.0.0.0',
     port: 3000,
