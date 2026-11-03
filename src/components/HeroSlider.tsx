@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PageView } from '../types';
 import { HERO_SLIDES, createWhatsAppUrl } from '../data/menuData';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { handleImageError } from '../utils/assetHelper';
 
 interface HeroSliderProps {
   onNavigate: (page: PageView) => void;
@@ -55,10 +56,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onNavigate }) => {
               src={slide.image}
               alt={slide.title}
               className="w-full h-full object-cover absolute inset-0"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src =
-                  './assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg';
-              }}
+              onError={handleImageError}
             />
             {/* Dark gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#050705]/95 via-[#050705]/80 to-[#050705]/25" />

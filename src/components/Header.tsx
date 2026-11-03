@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageView } from '../types';
 import { createWhatsAppUrl } from '../data/menuData';
 import { ShoppingBag, Menu, X, ArrowUpRight } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface HeaderProps {
   currentPage: PageView;
@@ -53,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <div className="w-12 h-12 rounded-full overflow-hidden border border-[#d8ad53] bg-[#141711] shrink-0 transition-transform group-hover:scale-105 shadow-md">
               <img
-                src="./logo.png"
+                src={getAssetUrl('logo.png')}
                 alt="Naija Pot Kitchen & Grill Ltd Logo"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

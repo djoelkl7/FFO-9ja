@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CartItem } from '../types';
 import { createWhatsAppUrl } from '../data/menuData';
 import { X, Plus, Minus, Trash2, ArrowUpRight, ShoppingBag } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface OrderCartModalProps {
   isOpen: boolean;
@@ -62,7 +63,7 @@ export const OrderCartModal: React.FC<OrderCartModalProps> = ({
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-[#d8ad53]/50 shrink-0 bg-black">
               <img
-                src="./logo.png"
+                src={getAssetUrl('logo.png')}
                 alt="Naija Pot"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

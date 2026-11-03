@@ -4,6 +4,7 @@ import { HeroSlider } from '../components/HeroSlider';
 import { SquareFoodSlider } from '../components/SquareFoodSlider';
 import { createWhatsAppUrl } from '../data/menuData';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface HomeViewProps {
   onNavigate: (page: PageView) => void;
@@ -22,7 +23,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           <div className="lg:col-span-2 flex justify-start lg:justify-center">
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[#d8ad53] relative bg-[#141711] shadow-xl shrink-0 group">
               <img
-                src="./logo.png"
+                src={getAssetUrl('logo.png')}
                 alt="Naija Pot Kitchen & Grill Seal"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
@@ -83,13 +84,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             {/* Card 1: Soups */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
-                src="./assets/images/uploads/Amala-450x450.jpg"
+                src={getAssetUrl('assets/images/uploads/Amala-450x450.jpg')}
                 alt="Traditional soup and swallow meal"
                 className="w-full h-48 object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=900&q=80';
-                }}
+                onError={handleImageError}
               />
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
@@ -116,13 +114,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             {/* Card 2: Grills & Suya */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
-                src="./assets/images/uploads/Suya-meat-450x450.jpg"
+                src={getAssetUrl('assets/images/uploads/Suya-meat-450x450.jpg')}
                 alt="Charcoal grilled suya"
                 className="w-full h-48 object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80';
-                }}
+                onError={handleImageError}
               />
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
@@ -149,13 +144,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             {/* Card 3: Rice & Specials */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
-                src="./assets/images/uploads/Jollof-Rice-450x450.jpg"
+                src={getAssetUrl('assets/images/uploads/Jollof-Rice-450x450.jpg')}
                 alt="Nigerian Party Jollof Rice"
                 className="w-full h-48 object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80';
-                }}
+                onError={handleImageError}
               />
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
@@ -182,13 +174,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             {/* Card 4: Bakery */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
-                src="./assets/images/uploads/Meatpie-450x450.jpg"
+                src={getAssetUrl('assets/images/uploads/Meatpie-450x450.jpg')}
                 alt="Nigerian meat pies and Agege loaf"
                 className="w-full h-48 object-cover"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80';
-                }}
+                onError={handleImageError}
               />
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
@@ -224,8 +213,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         <div
           className="bg-cover bg-center min-h-[300px] lg:min-h-full"
           style={{
-            backgroundImage:
-              "url('./assets/images/uploads/Suya-meat-450x450.jpg')",
+            backgroundImage: `url(${getAssetUrl('assets/images/uploads/Suya-meat-450x450.jpg')})`,
           }}
         />
         <div className="p-8 sm:p-14 lg:p-20 flex flex-col justify-center">

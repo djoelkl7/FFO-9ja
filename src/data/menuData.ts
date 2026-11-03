@@ -1,4 +1,7 @@
 import { Dish, CategoryInfo, BakeryProduct } from '../types';
+import { getAssetUrl } from '../utils/assetHelper';
+
+const img = (filename: string) => getAssetUrl('assets/images/uploads/' + filename);
 
 export const RESTAURANT_INFO = {
   name: 'Naija Pot Kitchen & Grill Ltd',
@@ -46,7 +49,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Grilled beef seasoned with our traditional northern Nigerian spices.',
-    image: './assets/images/uploads/Suya-meat-450x450.jpg',
+    image: img('Suya-meat-450x450.jpg'),
     tag: 'Bestseller',
   },
   {
@@ -56,7 +59,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Smoky grilled goat meat garnished in fiery hot peppers and onions.',
-    image: './assets/images/uploads/Asun-450x450.jpg',
+    image: img('Asun-450x450.jpg'),
     tag: 'Spicy',
   },
   {
@@ -66,7 +69,7 @@ export const DISHES: Dish[] = [
     price: '£30.00',
     numericPrice: 30.0,
     description: 'Tilapia or Croaker with fried yam or dodo, and signature chilli sauce.',
-    image: './assets/images/uploads/Tilapia-FIsh-450x450.jpg',
+    image: img('Tilapia-FIsh-450x450.jpg'),
   },
   {
     id: 'chicken-suya-whole',
@@ -75,7 +78,7 @@ export const DISHES: Dish[] = [
     price: '£30.00',
     numericPrice: 30.0,
     description: 'Whole chicken seasoned in special authentic spices and slow grilled.',
-    image: './assets/images/uploads/Chickenn-Suya-450x450.jpg',
+    image: img('Chickenn-Suya-450x450.jpg'),
   },
   {
     id: 'peppered-turkey-wings',
@@ -84,7 +87,7 @@ export const DISHES: Dish[] = [
     price: '£8.00',
     numericPrice: 8.0,
     description: 'Smoky turkey wings tossed in rich peppered sauce.',
-    image: './assets/images/uploads/Garnished-Meat-450x450.jpg',
+    image: img('Grilled-Chicken-Wings-450x450.jpg'),
   },
   {
     id: 'grilled-chicken-wings',
@@ -93,7 +96,7 @@ export const DISHES: Dish[] = [
     price: '£8.00',
     numericPrice: 8.0,
     description: 'Smoky wings seasoned with our signature house spice rub.',
-    image: './assets/images/uploads/Grilled-Chicken-Wings-450x450.jpg',
+    image: img('Grilled-Chicken-Wings-450x450.jpg'),
   },
   {
     id: 'mixed-grill-platter',
@@ -102,7 +105,7 @@ export const DISHES: Dish[] = [
     price: '£120.00',
     numericPrice: 120.0,
     description: 'Chicken wings, chicken suya, beef suya, fried yam & plantain.',
-    image: './assets/images/uploads/Mixed-Grill-450x450.jpg',
+    image: img('Mixed-Grill-450x450.jpg'),
     tag: 'Sharing Platter',
   },
   {
@@ -112,7 +115,7 @@ export const DISHES: Dish[] = [
     price: '£20.00',
     numericPrice: 20.0,
     description: 'Assorted meat tossed in our rich, savory peppered sauce.',
-    image: './assets/images/uploads/Garnished-Meat-450x450.jpg',
+    image: img('Garnished-Meat-450x450.jpg'),
   },
 
   // 02 Rice Dishes
@@ -123,7 +126,7 @@ export const DISHES: Dish[] = [
     price: '£17.00',
     numericPrice: 17.0,
     description: 'Our legendary party jollof with peppered beef and chicken — complimentary fried plantain.',
-    image: './assets/images/uploads/Jollof-Rice-450x450.jpg',
+    image: img('Jollof-Rice-450x450.jpg'),
     tag: 'Iconic',
   },
   {
@@ -133,7 +136,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Savoury fried rice with peppered beef and chicken — complimentary fried plantain.',
-    image: './assets/images/uploads/Fried-Rice-450x450.jpg',
+    image: img('Fried-Rice-450x450.jpg'),
   },
   {
     id: 'white-rice-assorted',
@@ -142,7 +145,7 @@ export const DISHES: Dish[] = [
     price: '£17.00',
     numericPrice: 17.0,
     description: 'Steamed white rice served with sweet fried plantain and assorted meat.',
-    image: './assets/images/uploads/White-Rice-450x450.jpg',
+    image: img('White-Rice-450x450.jpg'),
   },
   {
     id: 'ofada-ayamase',
@@ -151,7 +154,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Authentic local unpolished ofada rice paired with rich green pepper designer stew.',
-    image: './assets/images/uploads/Ofada-Rice-450x450.jpg',
+    image: img('Ofada-Rice-450x450.jpg'),
     tag: 'Specialty',
   },
   {
@@ -161,7 +164,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Fluffy steamed white rice with our signature green pepper bleached palm oil stew.',
-    image: './assets/images/uploads/White-rice-ayamase-450x450.jpg',
+    image: img('White-rice-ayamase-450x450.jpg'),
   },
   {
     id: 'rice-with-assorted-meat',
@@ -170,7 +173,7 @@ export const DISHES: Dish[] = [
     price: '£17.00',
     numericPrice: 17.0,
     description: 'Your choice of Jollof, Fried or White rice served with assorted meat cuts.',
-    image: './assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg',
+    image: img('Jollof-with-assorted-meat-450x450.jpg'),
   },
   {
     id: 'jollof-suya-beef',
@@ -179,7 +182,7 @@ export const DISHES: Dish[] = [
     price: '£22.00',
     numericPrice: 22.0,
     description: 'Smoky party jollof generously topped with spicy charcoal suya beef.',
-    image: './assets/images/uploads/Rice-with-suya-beef-450x450.jpg',
+    image: img('Rice-with-suya-beef-450x450.jpg'),
   },
   {
     id: 'jollof-suya-chicken',
@@ -188,7 +191,7 @@ export const DISHES: Dish[] = [
     price: '£22.00',
     numericPrice: 22.0,
     description: 'Smoky party jollof topped with spicy grilled suya chicken cuts.',
-    image: './assets/images/uploads/Rice-and-suya-chicken-450x450.jpg',
+    image: img('Rice-and-suya-chicken-450x450.jpg'),
   },
   {
     id: 'rice-meal-custom',
@@ -197,7 +200,7 @@ export const DISHES: Dish[] = [
     price: '£10–£22',
     numericPrice: 16.0,
     description: 'Build your own custom meal — Jollof, Fried, White or Ofada with custom sides.',
-    image: './assets/images/uploads/Jollof-Rice-450x450.jpg',
+    image: img('Jollof-Rice-450x450.jpg'),
     tag: 'Build Your Own',
   },
 
@@ -209,7 +212,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Pick your soup — Efo Riro, Ogbono, Okro or Ewedu — and protein: peppered fried fish or assorted meat.',
-    image: './assets/images/uploads/Amala-450x450.jpg',
+    image: img('Amala-450x450.jpg'),
     tag: 'Choose & Pair',
     isSolid: true,
   },
@@ -220,7 +223,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Smooth, stretchy pounded yam. Pick your soup (Efo Riro, Ogbono, Okro or Ewedu) and protein.',
-    image: './assets/images/uploads/Pounded-Yam-450x450.jpg',
+    image: img('Pounded-Yam-450x450.jpg'),
     tag: 'Choose & Pair',
     isSolid: true,
   },
@@ -231,7 +234,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'White garri swallow. Pick your soup (Efo Riro, Ogbono, Okro or Ewedu) and protein.',
-    image: './assets/images/uploads/White-Eba-450x450.jpg',
+    image: img('White-Eba-450x450.jpg'),
     tag: 'Choose & Pair',
     isSolid: true,
   },
@@ -242,7 +245,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Palm oil infused yellow garri. Pick your soup (Efo Riro, Ogbono, Okro or Ewedu) and protein.',
-    image: './assets/images/uploads/Yellow-eba-450x450.jpg',
+    image: img('Yellow-eba-450x450.jpg'),
     tag: 'Choose & Pair',
     isSolid: true,
   },
@@ -255,7 +258,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Comfort food, Nigerian style. Tender yam chunks simmered with crayfish, peppers and aromatics.',
-    image: './assets/images/uploads/Asaro-450x450.jpg',
+    image: img('Asaro-450x450.jpg'),
   },
   {
     id: 'yam-and-sauce',
@@ -264,7 +267,7 @@ export const DISHES: Dish[] = [
     price: '£17.00',
     numericPrice: 17.0,
     description: 'Boiled yam slices in aromatic pepper sauce, served with meat or fish.',
-    image: './assets/images/uploads/Yam-and-stew-450x450.jpg',
+    image: img('Yam-and-stew-450x450.jpg'),
   },
   {
     id: 'fried-yam-chilli',
@@ -273,7 +276,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Crispy fried golden yam batons served with our signature hot chilli sauce.',
-    image: './assets/images/uploads/Dundun-450x450.jpg',
+    image: img('Dundun-450x450.jpg'),
   },
   {
     id: 'plantain-chilli-sauce',
@@ -282,7 +285,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Sweet ripe fried plantain paired with hot spicy pepper relish.',
-    image: './assets/images/uploads/Dodo-with-sauce-450x450.jpg',
+    image: img('Dodo-with-sauce-450x450.jpg'),
   },
 
   // 05 Naija Delicacies
@@ -293,7 +296,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Slow-cooked mashed beans drenched with rich, dark fiery agoyin chilli oil sauce.',
-    image: './assets/images/uploads/Ewa-agoyin-450x450.jpg',
+    image: img('Ewa-agoyin-450x450.jpg'),
     tag: 'Lagos Classic',
   },
   {
@@ -303,7 +306,7 @@ export const DISHES: Dish[] = [
     price: '£5.00',
     numericPrice: 5.0,
     description: 'Traditional steamed savoury bean pudding seasoned with fish flakes, egg and sweet peppers.',
-    image: './assets/images/uploads/Moin-Moin-450x450.jpg',
+    image: img('Moin-Moin-450x450.jpg'),
   },
   {
     id: 'plantain-omelette-chilli',
@@ -312,7 +315,7 @@ export const DISHES: Dish[] = [
     price: '£18.00',
     numericPrice: 18.0,
     description: 'Fried sweet plantain, fluffy spiced fried omelette and fiery dipping chilli sauce.',
-    image: './assets/images/uploads/fried-plantain-and-egg-sauce-450x450.jpg',
+    image: img('fried-plantain-and-egg-sauce-450x450.jpg'),
   },
   {
     id: 'assorted-fried-meat',
@@ -321,7 +324,7 @@ export const DISHES: Dish[] = [
     price: '£20.00',
     numericPrice: 20.0,
     description: 'Fried assorted meat (shaki, beef, roundabout) tossed in spicy chilli sauce.',
-    image: './assets/images/uploads/Assorted-Meat-450x450.jpg',
+    image: img('Assorted-Meat-450x450.jpg'),
     tag: 'Spicy',
   },
   {
@@ -331,7 +334,7 @@ export const DISHES: Dish[] = [
     price: '£10.00',
     numericPrice: 10.0,
     description: 'Naija-style omelette, soft, seasoned with tomatoes and onions, full of flavour.',
-    image: './assets/images/uploads/Omelette-450x450.jpg',
+    image: img('Omelette-450x450.jpg'),
   },
 
   // 06 Fish & Side Dishes
@@ -342,7 +345,7 @@ export const DISHES: Dish[] = [
     price: '£30.00',
     numericPrice: 30.0,
     description: 'Whole grilled or fried croaker with fried plantain, yam (or both) and chilli sauce.',
-    image: './assets/images/uploads/Tilapia-FIsh-450x450.jpg',
+    image: img('Tilapia-FIsh-450x450.jpg'),
   },
   {
     id: 'tilapia-fish-whole',
@@ -351,7 +354,7 @@ export const DISHES: Dish[] = [
     price: '£30.00',
     numericPrice: 30.0,
     description: 'Whole seasoned tilapia with fried plantain, yam (or both) and chilli sauce.',
-    image: './assets/images/uploads/Tilapia-FIsh-450x450.jpg',
+    image: img('Tilapia-FIsh-450x450.jpg'),
   },
   {
     id: 'assorted-meat-pepper-soup',
@@ -360,7 +363,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Rich, warming spicy herbal broth simmered with tender assorted meat pieces.',
-    image: './assets/images/uploads/Nigerian-meat-pepper-soup-in-a-pink-bowl.jpg',
+    image: img('Nigerian-meat-pepper-soup-in-a-pink-bowl.jpg'),
     tag: 'Spicy',
   },
   {
@@ -370,7 +373,7 @@ export const DISHES: Dish[] = [
     price: '£15.00',
     numericPrice: 15.0,
     description: 'Fresh catfish in a fragrant, aromatic, fiery Nigerian pepper broth.',
-    image: './assets/images/uploads/catfish-pepper-soup-image_6.jpg',
+    image: img('catfish-pepper-soup-image_6.jpg'),
     tag: 'Spicy',
   },
   {
@@ -380,7 +383,7 @@ export const DISHES: Dish[] = [
     price: '£5.00',
     numericPrice: 5.0,
     description: 'Sweet, golden-brown fried plantain slices — the quintessential Nigerian side.',
-    image: './assets/images/uploads/Plantain-450x450.jpg',
+    image: img('Plantain-450x450.jpg'),
   },
 
   // 07 Small Chops & Platters
@@ -391,7 +394,7 @@ export const DISHES: Dish[] = [
     price: '£100.00',
     numericPrice: 100.0,
     description: 'Skewers of grilled beef and chicken on sticks dusted with authentic northern yaji.',
-    image: './assets/images/uploads/Suya-Platter-450x450.jpg',
+    image: img('Suya-Platter-450x450.jpg'),
     tag: 'Sharing',
   },
   {
@@ -401,7 +404,7 @@ export const DISHES: Dish[] = [
     price: '£120.00',
     numericPrice: 120.0,
     description: 'Generous party platter of grilled goat meat marinated in spicy scotch bonnet pepper sauce.',
-    image: './assets/images/uploads/Asun-Platter-450x450.jpg',
+    image: img('Asun-Platter-450x450.jpg'),
     tag: 'Premium',
   },
   {
@@ -411,7 +414,7 @@ export const DISHES: Dish[] = [
     price: '£100.00',
     numericPrice: 100.0,
     description: 'Suya, crunchy spring rolls, sweet puff-puff, spicy asun, mini meat pies & sausage rolls.',
-    image: './assets/images/uploads/Small-chops-platterJ-450x450.jpg',
+    image: img('Small-chops-platterJ-450x450.jpg'),
     tag: 'Event Favourite',
   },
   {
@@ -421,7 +424,7 @@ export const DISHES: Dish[] = [
     price: '£10.00',
     numericPrice: 10.0,
     description: 'Soft, golden, pillowy fried dough spheres — lightly sweet and addictive.',
-    image: './assets/images/uploads/Puff-Puff-450x450.jpg',
+    image: img('Puff-Puff-450x450.jpg'),
   },
   {
     id: 'meat-pie',
@@ -430,7 +433,7 @@ export const DISHES: Dish[] = [
     price: '£2.50',
     numericPrice: 2.5,
     description: 'Flaky golden buttery pastry stuffed with seasoned minced meat and potatoes.',
-    image: './assets/images/uploads/Meatpie-450x450.jpg',
+    image: img('Meatpie-450x450.jpg'),
   },
   {
     id: 'sausage-roll',
@@ -439,7 +442,7 @@ export const DISHES: Dish[] = [
     price: '£2.50',
     numericPrice: 2.5,
     description: 'Crisp, buttery puff pastry wrapped around succulent seasoned sausage meat.',
-    image: './assets/images/uploads/Sausage-Roll-2-450x450.jpg',
+    image: img('Sausage-Roll-2-450x450.jpg'),
   },
   {
     id: 'fish-roll',
@@ -448,7 +451,7 @@ export const DISHES: Dish[] = [
     price: '£2.00',
     numericPrice: 2.0,
     description: 'Crispy pastry roll filled with delicious seasoned fish flakes and pepper.',
-    image: './assets/images/uploads/Sausage-Roll-1-450x450.jpg',
+    image: img('Sausage-Roll-1-450x450.jpg'),
   },
   {
     id: 'chicken-scotch-egg',
@@ -457,7 +460,7 @@ export const DISHES: Dish[] = [
     price: '£2.00',
     numericPrice: 2.0,
     description: 'Boiled egg wrapped in seasoned minced chicken, breadcrumbed and fried golden.',
-    image: './assets/images/uploads/Scotch-Egg-1-450x450.jpg',
+    image: img('Scotch-Egg-1-450x450.jpg'),
   },
   {
     id: 'chin-chin',
@@ -466,7 +469,7 @@ export const DISHES: Dish[] = [
     price: '£2.00',
     numericPrice: 2.0,
     description: 'Crunchy deep-fried snack dough cubes with nutmeg and vanilla.',
-    image: './assets/images/uploads/Chin-chin-450x450.jpg',
+    image: img('Chin-chin-450x450.jpg'),
   },
   {
     id: 'plantain-chips',
@@ -475,7 +478,7 @@ export const DISHES: Dish[] = [
     price: '£1.50',
     numericPrice: 1.5,
     description: 'Thinly sliced crisp green plantain chips, lightly salted.',
-    image: './assets/images/uploads/Plantain-chips-450x450.jpg',
+    image: img('Plantain-chips-450x450.jpg'),
   },
 
   // 08 Snacks & Extras
@@ -486,7 +489,7 @@ export const DISHES: Dish[] = [
     price: '£4.99',
     numericPrice: 4.99,
     description: 'Roasted to a crunchy golden brown the traditional Naija way.',
-    image: './assets/images/uploads/Groundnut-bottle-450x450.jpg',
+    image: img('Groundnut-bottle-450x450.jpg'),
   },
   {
     id: 'moimoi-pouch',
@@ -495,7 +498,7 @@ export const DISHES: Dish[] = [
     price: '£3.50',
     numericPrice: 3.5,
     description: 'High quality food-grade, non-toxic, leak-proof and reusable cooking pouches.',
-    image: './assets/images/uploads/moinmoinlicious-450x450.png',
+    image: img('moinmoinlicious-450x450.png'),
     tag: 'Reusable',
   },
 
@@ -507,7 +510,7 @@ export const DISHES: Dish[] = [
     price: '£3.00',
     numericPrice: 3.0,
     description: 'Fresh authentic Agege loaf bread — dense, soft and sweet. Baked Sundays only.',
-    image: './assets/images/uploads/Load-Bread-450x450.jpg',
+    image: img('Load-Bread-450x450.jpg'),
     tag: 'Sundays Only',
   },
   {
@@ -517,7 +520,7 @@ export const DISHES: Dish[] = [
     price: '£5.00',
     numericPrice: 5.0,
     description: 'Pack of 12 fresh soft Agege pull-apart rolls — baked Sundays only.',
-    image: './assets/images/uploads/Bread-450x450.jpg',
+    image: img('Bread-450x450.jpg'),
     tag: 'Sundays Only',
   },
   {
@@ -527,7 +530,7 @@ export const DISHES: Dish[] = [
     price: '£12.00',
     numericPrice: 12.0,
     description: 'Moist variety cake mini loaves — gently sweet and rich.',
-    image: './assets/images/uploads/Cake-450x450.jpg',
+    image: img('Cake-450x450.jpg'),
   },
 
   // 10 Drinks
@@ -585,7 +588,7 @@ export const BAKERY_PRODUCTS: BakeryProduct[] = [
     kicker: '01 · FRESH FROM THE OVEN',
     name: 'Naija Meat Pie',
     description: 'Golden, flaky buttery pastry with a savoury minced meat & potato filling inspired by the classic Nigerian bakery pie.',
-    image: './assets/images/uploads/Meatpie-450x450.jpg',
+    image: img(''),
     tag: 'Savoury favourite',
     price: '£2.50',
   },
@@ -594,7 +597,7 @@ export const BAKERY_PRODUCTS: BakeryProduct[] = [
     kicker: '02 · SOFT & COMFORTING',
     name: 'Agege-Style Loaf Bread',
     description: 'Soft, fluffy bread with a gentle sweetness — lovely with stew, a favourite spread, or a cup of warm tea.',
-    image: './assets/images/uploads/Load-Bread-450x450.jpg',
+    image: img(''),
     tag: 'Family table · Sundays',
     price: '£3.00',
   },
@@ -603,7 +606,7 @@ export const BAKERY_PRODUCTS: BakeryProduct[] = [
     kicker: '03 · SHARE THE GOODNESS',
     name: 'Tear & Share Rolls',
     description: 'A batch of 12 soft, golden pull-apart rolls for breakfast, family gatherings and sharing around the table.',
-    image: './assets/images/uploads/Bread-450x450.jpg',
+    image: img(''),
     tag: 'Made for sharing',
     price: '£5.00',
   },
@@ -612,7 +615,7 @@ export const BAKERY_PRODUCTS: BakeryProduct[] = [
     kicker: '04 · LITTLE MOMENTS',
     name: 'Mini Cake Loaves',
     description: 'Moist, gently sweet mini loaves — a thoughtful treat for guests, tea time or celebrating a sweet moment.',
-    image: './assets/images/uploads/Cake-450x450.jpg',
+    image: img(''),
     tag: 'A sweet treat',
     price: '£12.00',
   },
@@ -624,7 +627,7 @@ export const HERO_SLIDES = [
     title: 'Real Nigerian flavour.',
     italic: 'Made with love.',
     desc: 'From comforting classics to smoky charcoal grills, bring the warmth of a Naija kitchen to your table.',
-    image: './assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg',
+    image: img('Jollof-with-assorted-meat-450x450.jpg'),
     actionPrimary: { label: 'Explore our menu', target: 'menu' },
     actionSecondary: { label: 'Order on WhatsApp', isExternal: true },
   },
@@ -633,7 +636,7 @@ export const HERO_SLIDES = [
     title: 'Comfort in every',
     italic: 'single spoonful.',
     desc: 'Rich soups, delicious swallows and generous portions inspired by home traditions.',
-    image: './assets/images/uploads/Pounded-Yam-450x450.jpg',
+    image: img('Pounded-Yam-450x450.jpg'),
     actionPrimary: { label: 'Discover the menu', target: 'menu' },
     actionSecondary: { label: 'Our story', target: 'story' },
   },
@@ -642,7 +645,7 @@ export const HERO_SLIDES = [
     title: 'Gather round.',
     italic: 'Let’s eat well.',
     desc: 'Enjoy bold charcoal grills, party platters and the unmistakable authentic taste of Naija Pot.',
-    image: './assets/images/uploads/Mixed-Grill-450x450.jpg',
+    image: img('Mixed-Grill-450x450.jpg'),
     actionPrimary: { label: 'See our specials', target: 'specials' },
     actionSecondary: { label: 'Find us', target: 'contact' },
   },
@@ -651,7 +654,7 @@ export const HERO_SLIDES = [
     title: 'Authentic Suya',
     italic: 'seasoned to perfection.',
     desc: 'Smokey beef suya skewers with traditional northern yaji spice and fiery peppered goat asun.',
-    image: './assets/images/uploads/Suya-Platter-450x450.jpg',
+    image: img('Suya-Platter-450x450.jpg'),
     actionPrimary: { label: 'Order grills', target: 'menu' },
     actionSecondary: { label: 'Our story', target: 'story' },
   },
@@ -660,7 +663,7 @@ export const HERO_SLIDES = [
     title: 'Artisanal Bakery',
     italic: '& golden pastries.',
     desc: 'Flaky savoury meat pies, warm Sunday Agege bread and sweet treats prepared with care.',
-    image: './assets/images/uploads/Meatpie-450x450.jpg',
+    image: img('Meatpie-450x450.jpg'),
     actionPrimary: { label: 'Explore bakery', target: 'bakery' },
     actionSecondary: { label: 'Contact us', target: 'contact' },
   },

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageView } from '../types';
 import { createWhatsAppUrl } from '../data/menuData';
 import { ArrowUpRight, Users, Utensils, Flame, Send } from 'lucide-react';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface SpecialsViewProps {
   onNavigate: (page: PageView) => void;
@@ -46,8 +47,7 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate }) => {
       <section
         className="relative h-96 sm:h-[440px] bg-cover bg-center flex items-center"
         style={{
-          backgroundImage:
-            "url('./assets/images/uploads/Asun-Platter-450x450.jpg')",
+          backgroundImage: `url(${getAssetUrl('assets/images/uploads/Asun-Platter-450x450.jpg')})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#050705]/95 via-[#050705]/80 to-[#050705]/50" />
@@ -73,13 +73,10 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="rounded-xl overflow-hidden shadow-2xl border border-white/10 h-80 sm:h-[420px]">
             <img
-              src="./assets/images/uploads/Mixed-Grill-450x450.jpg"
+              src={getAssetUrl('assets/images/uploads/Mixed-Grill-450x450.jpg')}
               alt="Grilled food platter for sharing"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=85';
-              }}
+              onError={handleImageError}
             />
           </div>
 

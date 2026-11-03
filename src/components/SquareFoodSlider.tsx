@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { PageView } from '../types';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 export interface FoodSlide {
   id: string;
@@ -20,7 +21,7 @@ export const SLIDER_DISHES: FoodSlide[] = [
     category: 'Rice & Specials',
     tag: 'Iconic Home Taste',
     price: '£17.00',
-    image: './assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg',
+    image: getAssetUrl('assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg'),
     description: 'Smokey party jollof with fried plantain and tender assorted meat.',
   },
   {
@@ -29,7 +30,7 @@ export const SLIDER_DISHES: FoodSlide[] = [
     category: 'From The Grill',
     tag: 'Smokey & Spicy',
     price: '£15.00',
-    image: './assets/images/uploads/Suya-meat-450x450.jpg',
+    image: getAssetUrl('assets/images/uploads/Suya-meat-450x450.jpg'),
     description: 'Tender beef grilled over hot charcoal with northern yaji spice.',
   },
   {
@@ -38,7 +39,7 @@ export const SLIDER_DISHES: FoodSlide[] = [
     category: 'Solid Dishes',
     tag: 'Traditional Classic',
     price: '£18.00',
-    image: './assets/images/uploads/Amala-450x450.jpg',
+    image: getAssetUrl('assets/images/uploads/Amala-450x450.jpg'),
     description: 'Smooth, steaming amala paired with rich Efo Riro or Ogbono.',
   },
   {
@@ -47,7 +48,7 @@ export const SLIDER_DISHES: FoodSlide[] = [
     category: 'Bakery Treats',
     tag: 'Fresh From Oven',
     price: '£2.50',
-    image: './assets/images/uploads/Meatpie-450x450.jpg',
+    image: getAssetUrl('assets/images/uploads/Meatpie-450x450.jpg'),
     description: 'Buttery flaky pastry filled with seasoned minced meat & potato.',
   },
   {
@@ -56,7 +57,7 @@ export const SLIDER_DISHES: FoodSlide[] = [
     category: 'Grills Corner',
     tag: 'Party Favourite',
     price: '£18.00',
-    image: './assets/images/uploads/Asun-450x450.jpg',
+    image: getAssetUrl('assets/images/uploads/Asun-450x450.jpg'),
     description: 'Fire-grilled goat meat diced and tossed in scotch bonnet peppers.',
   },
 ];
@@ -212,10 +213,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
             src={currentDish.image}
             alt={currentDish.name}
             className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src =
-                './assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg';
-            }}
+            onError={handleImageError}
           />
         </div>
       </div>
@@ -229,7 +227,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
         {/* Subtle Brand Crest Badge */}
         <div className="flex items-center gap-2 bg-[#090a08]/85 backdrop-blur-md border border-[#d8ad53]/40 px-2.5 py-1 rounded-full shadow-lg">
           <img
-            src="./logo.png"
+            src={getAssetUrl('logo.png')}
             alt="Naija Pot Seal"
             className="w-5 h-5 rounded-full object-cover"
             referrerPolicy="no-referrer"

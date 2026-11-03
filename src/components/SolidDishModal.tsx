@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dish, CartItem } from '../types';
 import { SOUP_OPTIONS, PROTEIN_OPTIONS, EXTRA_OPTIONS, createWhatsAppUrl } from '../data/menuData';
 import { X, Check, Plus, ArrowUpRight } from 'lucide-react';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface SolidDishModalProps {
   dish: Dish | null;
@@ -67,16 +68,13 @@ export const SolidDishModal: React.FC<SolidDishModalProps> = ({
             src={dish.image}
             alt={dish.name}
             className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src =
-                './assets/images/uploads/Amala-450x450.jpg';
-            }}
+            onError={handleImageError}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#141711] via-[#141711]/40 to-transparent" />
           {/* Official Logo Brand Badge */}
           <div className="absolute top-3 left-3 flex items-center gap-2 bg-[#090a08]/85 backdrop-blur-md px-2.5 py-1 rounded-full border border-[#d8ad53]/40 shadow-lg">
             <img
-              src="./logo.png"
+              src={getAssetUrl('logo.png')}
               alt="Naija Pot"
               className="w-5 h-5 rounded-full object-cover"
               referrerPolicy="no-referrer"

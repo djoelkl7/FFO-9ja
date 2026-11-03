@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CartItem, BakeryProduct } from '../types';
 import { BAKERY_PRODUCTS, RESTAURANT_INFO, createWhatsAppUrl } from '../data/menuData';
 import { ArrowUpRight, Plus, Check, Clock, Phone, MapPin } from 'lucide-react';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface BakeryViewProps {
   onAddToCart: (item: Omit<CartItem, 'cartId'>) => void;
@@ -31,8 +32,7 @@ export const BakeryView: React.FC<BakeryViewProps> = ({ onAddToCart }) => {
       <section
         className="relative h-96 sm:h-[460px] bg-cover bg-center flex items-center"
         style={{
-          backgroundImage:
-            "url('./assets/images/uploads/Bread-450x450.jpg')",
+          backgroundImage: `url(${getAssetUrl('assets/images/uploads/Bread-450x450.jpg')})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#050705]/95 via-[#050705]/80 to-[#050705]/50" />
@@ -89,13 +89,10 @@ export const BakeryView: React.FC<BakeryViewProps> = ({ onAddToCart }) => {
 
           <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl relative h-80 sm:h-96">
             <img
-              src="./assets/images/uploads/Bread-450x450.jpg"
+              src={getAssetUrl('assets/images/uploads/Bread-450x450.jpg')}
               alt="Freshly baked Nigerian bread and pastries"
               className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=85';
-              }}
+              onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
               <span className="text-xs font-serif font-bold text-[#f2d58a]">
@@ -135,10 +132,7 @@ export const BakeryView: React.FC<BakeryViewProps> = ({ onAddToCart }) => {
                       src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src =
-                          './assets/images/uploads/Meatpie-450x450.jpg';
-                      }}
+                      onError={handleImageError}
                     />
                     <span className="absolute top-3 left-3 bg-[#090a08]/85 text-[#f2d58a] text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded shadow-md border border-[#d8ad53]/20">
                       {product.tag}

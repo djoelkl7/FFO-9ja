@@ -2,6 +2,7 @@ import React from 'react';
 import { PageView } from '../types';
 import { RESTAURANT_INFO, createWhatsAppUrl } from '../data/menuData';
 import { ArrowUpRight, Phone, MessageSquare, MapPin, Clock } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface FooterProps {
   onNavigate: (page: PageView) => void;
@@ -27,7 +28,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             >
               <div className="w-10 h-10 rounded-full overflow-hidden border border-[#d8ad53] bg-[#141711] shrink-0 shadow-md">
                 <img
-                  src="./logo.png"
+                  src={getAssetUrl('logo.png')}
                   alt="Naija Pot Kitchen & Grill Ltd Logo"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"

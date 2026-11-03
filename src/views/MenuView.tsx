@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Dish, MenuCategoryId, CartItem } from '../types';
 import { DISHES, CATEGORIES, createWhatsAppUrl } from '../data/menuData';
 import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check } from 'lucide-react';
+import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface MenuViewProps {
   onOpenSolidModal: (dish: Dish) => void;
@@ -56,8 +57,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
       <section
         className="relative h-96 sm:h-[440px] bg-cover bg-center flex items-center"
         style={{
-          backgroundImage:
-            "url('./assets/images/uploads/Jollof-Rice-450x450.jpg')",
+          backgroundImage: `url(${getAssetUrl('assets/images/uploads/Jollof-Rice-450x450.jpg')})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#050705]/95 via-[#050705]/80 to-[#050705]/50" />
@@ -177,10 +177,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
                           src={dish.image}
                           alt={dish.name}
                           className="w-full h-full object-cover"
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src =
-                              './assets/images/uploads/Jollof-Rice-450x450.jpg';
-                          }}
+                          onError={handleImageError}
                         />
                         {dish.tag && (
                           <span

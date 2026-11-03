@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageView } from '../types';
 import { RESTAURANT_INFO, createWhatsAppUrl } from '../data/menuData';
 import { Phone, MessageSquare, MapPin, Clock, Send, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 interface ContactViewProps {
   onNavigate: (page: PageView) => void;
@@ -32,8 +33,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate }) => {
       <section
         className="relative h-96 sm:h-[440px] bg-cover bg-center flex items-center"
         style={{
-          backgroundImage:
-            "url('./assets/images/uploads/Small-chops-platterJ-450x450.jpg')",
+          backgroundImage: `url(${getAssetUrl('assets/images/uploads/Small-chops-platterJ-450x450.jpg')})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#050705]/95 via-[#050705]/80 to-[#050705]/50" />
