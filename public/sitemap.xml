@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://naijapotkitchengrill.co.uk/</loc></url>
-  <url><loc>https://naijapotkitchengrill.co.uk/our-story.html</loc></url>
-  <url><loc>https://naijapotkitchengrill.co.uk/menu.html</loc></url>
-  <url><loc>https://naijapotkitchengrill.co.uk/bakery.html</loc></url>
-  <url><loc>https://naijapotkitchengrill.co.uk/specials.html</loc></url>
-  <url><loc>https://naijapotkitchengrill.co.uk/contact.html</loc></url>
+  <!-- Replace https://yourdomain.com with your actual domain when launched -->
+  <url><loc>https://yourdomain.com/</loc></url>
+  <url><loc>https://yourdomain.com/#story</loc></url>
+  <url><loc>https://yourdomain.com/#menu</loc></url>
+  <url><loc>https://yourdomain.com/#bakery</loc></url>
+  <url><loc>https://yourdomain.com/#specials</loc></url>
+  <url><loc>https://yourdomain.com/#contact</loc></url>
 </urlset>

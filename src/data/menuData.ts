@@ -19,7 +19,7 @@ export const RESTAURANT_INFO = {
     instagram: 'https://www.instagram.com/naijapotkitchen_grill_mk/',
     tiktok: 'https://www.tiktok.com/@naija.pot.kitchen',
     facebook: 'https://www.facebook.com/naijapotkitchen',
-    website: 'https://naijapotkitchengrill.co.uk',
+    website: typeof window !== 'undefined' ? window.location.origin : 'https://yourdomain.com',
   },
 };
 

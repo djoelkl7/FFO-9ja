@@ -15,7 +15,6 @@ node_modules/
 dist/
 dist-ssr/
 build/
-*.zip
 
 # Editor directories and files
 .vscode/*

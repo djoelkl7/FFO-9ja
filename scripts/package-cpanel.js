@@ -9,6 +9,8 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const zipScript = path.join(__dirname, 'create-zip.py');
 const zipOutput = path.join(rootDir, 'naija-pot-cpanel.zip');
+const publicZip = path.join(rootDir, 'public', 'naija-pot-cpanel.zip');
+const artifactDir = '/.aistudio/artifacts/brain/1e812bb9-ba7c-4225-bed4-9388e57884a3';
 
 console.log('====================================================');
 console.log('📦  NAIJA POT KITCHEN & GRILL — cPanel Packager');
@@ -33,21 +35,22 @@ NAIJA POT KITCHEN & GRILL LTD — cPanel Deployment Package
 
 HOW TO DEPLOY TO CPANEL IN 3 SIMPLE STEPS:
 
-1. Log into your cPanel dashboard (e.g. yourdomain.com:2083).
-2. Open "File Manager" and navigate to "public_html" (or your subdomain directory).
-   - If there are existing files, back them up or clear out previous old build files.
+1. Log into your cPanel dashboard (e.g. https://yourdomain.com:2083).
+2. Open "File Manager" and navigate to "public_html" (or your subdomain folder).
+   - If there are existing default files, back them up or clear out previous old files.
 3. Upload "naija-pot-cpanel.zip" into public_html, right-click the zip, and click "Extract".
+4. Navigate to your hosting URL (e.g. https://yourdomain.com) to view your live website!
 
 That's it! Your website is live with:
-- Full SPA client-side navigation
-- Apache .htaccess URL rewriting (no 404s on refresh)
-- Gzip/Deflate compression for fast loading
-- 1-year browser caching for CSS/JS/images
+- Full SPA client-side navigation (hash routing works out-of-the-box on all hosts)
+- Apache .htaccess URL rewriting (no 404s on direct page refresh)
+- Gzip/Deflate compression for fast mobile loading
+- 1-year browser caching for CSS, JS, and images
 - Robots.txt & Sitemap.xml pre-configured
 - WhatsApp ordering and custom meal inquiries
 
 Need SSL? In cPanel, click "SSL/TLS Status" -> "Run AutoSSL".
-To enforce HTTPS, open the .htaccess file and uncomment the HTTPS rewrite lines.
+To enforce HTTPS, open the .htaccess file in File Manager and uncomment the HTTPS rewrite lines.
 ================================================================================
 `;
 
@@ -62,8 +65,21 @@ try {
     stdio: 'inherit',
     cwd: rootDir,
   });
+
+  // Copy to public/ so users can download it directly via their browser URL
+  fs.copyFileSync(zipOutput, publicZip);
+  console.log(`✅ Copied to public folder for direct browser download: ${publicZip}`);
+
+  // Copy to artifact directory if available
+  if (fs.existsSync(artifactDir)) {
+    const artifactZip = path.join(artifactDir, 'naija-pot-cpanel.zip');
+    fs.copyFileSync(zipOutput, artifactZip);
+    console.log(`✅ Saved to AI Studio artifacts: ${artifactZip}`);
+  }
+
   console.log('\n🎉 SUCCESS! cPanel package is ready:');
-  console.log(`📁 File: ${zipOutput}`);
+  console.log(`📁 File in workspace: naija-pot-cpanel.zip (root directory)`);
+  console.log(`📁 File in public:    public/naija-pot-cpanel.zip`);
   console.log('👉 Upload this file directly to public_html in cPanel File Manager and click Extract.');
 } catch (err) {
   console.error('Failed to create zip:', err);
