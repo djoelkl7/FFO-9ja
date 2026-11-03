@@ -1,0 +1,8 @@
+{
+  "name": "Naija Pot Kitchen & Grill Ltd",
+  "description": "Authentic Nigerian cuisine, soups, party jollof, charcoal grills and bakery treats in Milton Keynes.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
