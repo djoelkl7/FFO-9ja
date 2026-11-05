@@ -18,7 +18,6 @@ export const App: React.FC = () => {
   const [solidModalDish, setSolidModalDish] = useState<Dish | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Initialize cart from localStorage if available
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem('naija_pot_tray');
@@ -29,14 +28,9 @@ export const App: React.FC = () => {
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem('naija_pot_tray', JSON.stringify(cart));
-    } catch {
-      // ignore storage error
-    }
+    try { localStorage.setItem('naija_pot_tray', JSON.stringify(cart)); } catch { /* ignore storage error */ }
   }, [cart]);
 
-  // Sync hash routing on load & popstate
   useEffect(() => {
     const handleHash = () => {
       const rawHash = window.location.hash.replace('#', '').toLowerCase();
@@ -50,22 +44,22 @@ export const App: React.FC = () => {
         return;
       }
       if (['home', 'story', 'menu', 'bakery', 'specials', 'contact'].includes(rawHash)) {
-        if (rawHash === 'menu') {
-          setMenuInitialCategory('all');
-        }
+        if (rawHash === 'menu') setMenuInitialCategory('all');
         setCurrentPage(rawHash as PageView);
       }
     };
 
     handleHash();
     window.addEventListener('popstate', handleHash);
-    return () => window.removeEventListener('popstate', handleHash);
+    window.addEventListener('hashchange', handleHash);
+    return () => {
+      window.removeEventListener('popstate', handleHash);
+      window.removeEventListener('hashchange', handleHash);
+    };
   }, []);
 
   const navigateTo = (page: PageView) => {
-    if (page === 'menu') {
-      setMenuInitialCategory('all');
-    }
+    if (page === 'menu') setMenuInitialCategory('all');
     setCurrentPage(page);
     window.location.hash = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -74,114 +68,47 @@ export const App: React.FC = () => {
   const navigateToMenuCategory = (category: MenuCategoryId) => {
     setMenuInitialCategory(category);
     setCurrentPage('menu');
-    window.location.hash = category === 'bakery' ? 'bakery' : `menu-${category}`;
+    window.location.hash = category === 'bakery' ? 'menu-bakery' : `menu-${category}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddToCart = (item: Omit<CartItem, 'cartId'>) => {
-    setCart((prev) => {
-      const existing = prev.find(
-        (i) => i.id === item.id && i.customization === item.customization
-      );
+    setCart((previous) => {
+      const existing = previous.find((cartItem) => cartItem.id === item.id && cartItem.customization === item.customization);
       if (existing) {
-        return prev.map((i) =>
-          i.cartId === existing.cartId
-            ? { ...i, quantity: i.quantity + item.quantity }
-            : i
-        );
+        return previous.map((cartItem) => cartItem.cartId === existing.cartId ? { ...cartItem, quantity: cartItem.quantity + item.quantity } : cartItem);
       }
-      const newCartItem: CartItem = {
-        ...item,
-        cartId: `${item.id}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-      };
-      return [...prev, newCartItem];
+      return [...previous, { ...item, cartId: `${item.id}-${Date.now()}-${Math.random().toString(36).substring(2, 6)}` }];
     });
   };
 
   const handleUpdateQuantity = (cartId: string, quantity: number) => {
     if (quantity <= 0) {
-      handleRemoveItem(cartId);
+      setCart((previous) => previous.filter((item) => item.cartId !== cartId));
       return;
     }
-    setCart((prev) =>
-      prev.map((i) => (i.cartId === cartId ? { ...i, quantity } : i))
-    );
+    setCart((previous) => previous.map((item) => item.cartId === cartId ? { ...item, quantity } : item));
   };
 
-  const handleRemoveItem = (cartId: string) => {
-    setCart((prev) => prev.filter((i) => i.cartId !== cartId));
-  };
-
-  const handleClearCart = () => {
-    setCart([]);
-  };
-
+  const handleRemoveItem = (cartId: string) => setCart((previous) => previous.filter((item) => item.cartId !== cartId));
+  const handleClearCart = () => setCart([]);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#090a08] text-[#f6f0e4]">
-      {/* Top Header */}
-      <Header
-        currentPage={currentPage}
-        onNavigate={navigateTo}
-        cartCount={cartCount}
-        onOpenCart={() => setIsCartOpen(true)}
-      />
-
-      {/* Main Page View */}
+      <Header currentPage={currentPage} onNavigate={navigateTo} cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} />
       <main className="flex-1">
         {currentPage === 'home' && <HomeView onNavigate={navigateTo} />}
         {currentPage === 'story' && <StoryView onNavigate={navigateTo} />}
-        {currentPage === 'menu' && (
-          <MenuView
-            initialCategory={menuInitialCategory}
-            onOpenSolidModal={(dish) => setSolidModalDish(dish)}
-            onAddToCart={handleAddToCart}
-          />
-        )}
-        {currentPage === 'bakery' && (
-          <BakeryView
-            onAddToCart={handleAddToCart}
-            onNavigateToMenuCategory={navigateToMenuCategory}
-            onNavigate={navigateTo}
-          />
-        )}
-        {currentPage === 'specials' && (
-          <SpecialsView
-            onNavigate={navigateTo}
-            onAddToCart={handleAddToCart}
-          />
-        )}
-        {currentPage === 'contact' && (
-          <ContactView
-            onNavigate={navigateTo}
-            onOpenCart={() => setIsCartOpen(true)}
-          />
-        )}
+        {currentPage === 'menu' && <MenuView initialCategory={menuInitialCategory} onOpenSolidModal={setSolidModalDish} onAddToCart={handleAddToCart} onNavigate={navigateTo} />}
+        {currentPage === 'bakery' && <BakeryView onAddToCart={handleAddToCart} onNavigateToMenuCategory={navigateToMenuCategory} onNavigate={navigateTo} />}
+        {currentPage === 'specials' && <SpecialsView onNavigate={navigateTo} onAddToCart={handleAddToCart} />}
+        {currentPage === 'contact' && <ContactView onNavigate={navigateTo} onOpenCart={() => setIsCartOpen(true)} />}
       </main>
-
-      {/* Footer */}
       <Footer onNavigate={navigateTo} />
-
-      {/* Persistent Floating WhatsApp Action */}
       <FloatingWhatsApp />
-
-      {/* Interactive Swallow / Solid Dish Customizer Modal */}
-      <SolidDishModal
-        dish={solidModalDish}
-        onClose={() => setSolidModalDish(null)}
-        onAddToCart={handleAddToCart}
-      />
-
-      {/* Cart / Order Tray Modal */}
-      <OrderCartModal
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cart={cart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onClearCart={handleClearCart}
-      />
+      <SolidDishModal dish={solidModalDish} onClose={() => setSolidModalDish(null)} onAddToCart={handleAddToCart} />
+      <OrderCartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cart={cart} onUpdateQuantity={handleUpdateQuantity} onRemoveItem={handleRemoveItem} onClearCart={handleClearCart} />
     </div>
   );
 };
