@@ -13,13 +13,10 @@ interface HomeViewProps {
 export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
   return (
     <div className="space-y-0">
-      {/* Hero Carousel */}
       <HeroSlider onNavigate={onNavigate} />
 
-      {/* Intro Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Circular Stamp / Logo Emblem */}
           <div className="lg:col-span-2 flex justify-start lg:justify-center">
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[#d8ad53] relative bg-[#141711] shadow-xl shrink-0 group">
               <img
@@ -31,7 +28,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Copy */}
           <div className="lg:col-span-5 space-y-4">
             <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase">
               WELCOME TO NAIJA POT
@@ -55,14 +51,12 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* GSAP Animated Square Food Slider */}
           <div className="lg:col-span-5 flex justify-center">
             <SquareFoodSlider onNavigate={onNavigate} />
           </div>
         </div>
       </section>
 
-      {/* Featured Categories Grid Section (Warm Sand Background like original) */}
       <section className="bg-[#f0eadf] text-[#090a08] py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -79,9 +73,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          {/* 4 Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Soups */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
                 src={getAssetUrl('assets/images/uploads/Amala-450x450.jpg')}
@@ -111,7 +103,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               </div>
             </article>
 
-            {/* Card 2: Grills & Suya */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
                 src={getAssetUrl('assets/images/uploads/Suya-meat-450x450.jpg')}
@@ -141,7 +132,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               </div>
             </article>
 
-            {/* Card 3: Rice & Specials */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
                 src={getAssetUrl('assets/images/uploads/Jollof-Rice-450x450.jpg')}
@@ -171,7 +161,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               </div>
             </article>
 
-            {/* Card 4: Bakery */}
             <article className="menu-card bg-white rounded-lg overflow-hidden shadow-md border border-[#090a08]/5 flex flex-col">
               <img
                 src={getAssetUrl('assets/images/uploads/Meatpie-450x450.jpg')}
@@ -208,7 +197,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Specials Highlight Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[480px] bg-[#12150f]">
         <div
           className="bg-cover bg-center min-h-[300px] lg:min-h-full"
@@ -242,7 +230,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Restaurant Kitchen & Food Truck Spotlight Section */}
       <section className="bg-[#0e110a] py-20 lg:py-28 border-y border-[#d8ad53]/25">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
           <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -258,24 +245,19 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Spotlight 1: Bradville Restaurant & Kitchen */}
             <article className="bg-[#141710] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group hover:border-[#d8ad53] transition-all">
               <div>
-                <div className="relative h-72 sm:h-80 overflow-hidden bg-black">
-                  <img
-                    src={getAssetUrl('assets/images/uploads/restaurant.jpg')}
-                    alt="Naija Pot Kitchen & Grill Restaurant Interior and Storefront in Bradville Milton Keynes"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={handleImageError}
-                  />
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-[#0f110c] flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141710] via-black/30 to-transparent" />
-                  <span className="absolute top-4 left-4 bg-[#090a08]/90 text-[#f2d58a] border border-[#d8ad53]/40 text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
-                    <Utensils className="w-3 h-3 text-[#d8ad53]" />
-                    <span>Bradville Restaurant</span>
-                  </span>
-                  <span className="absolute bottom-4 left-4 text-xs font-serif font-bold text-[#f2d58a] bg-black/80 px-3 py-1 rounded-md border border-white/10">
+                  <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-3">
+                    <span className="bg-[#090a08]/90 text-[#f2d58a] border border-[#d8ad53]/40 text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                      <Utensils className="w-3 h-3 text-[#d8ad53]" />
+                      <span>Bradville Restaurant</span>
+                    </span>
+                  </div>
+                  <div className="absolute inset-x-4 bottom-4 text-xs font-serif font-bold text-[#f2d58a] bg-black/80 px-3 py-1 rounded-md border border-white/10">
                     22 Eston Court, Bradville, Milton Keynes MK13 7DF
-                  </span>
+                  </div>
                 </div>
 
                 <div className="p-6 sm:p-8 space-y-4">
@@ -302,14 +284,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               <div className="p-6 sm:p-8 pt-0 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => onNavigate('contact')}
-                  className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+                  className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2"
                 >
                   <MapPin className="w-4 h-4" />
                   <span>Find Us &amp; Contact</span>
                 </button>
                 <button
                   onClick={() => onNavigate('menu')}
-                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2"
                 >
                   <span>Explore Menu</span>
                   <ArrowRight className="w-4 h-4" />
@@ -317,7 +299,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               </div>
             </article>
 
-            {/* Spotlight 2: The Naija Pot Food Truck (Food Tank) */}
             <article className="bg-[#141710] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group hover:border-[#d8ad53] transition-all">
               <div>
                 <div className="relative h-72 sm:h-80 overflow-hidden bg-black flex items-center justify-center">
@@ -342,7 +323,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                     The Naija Pot Food Truck &amp; Outdoor Catering
                   </h3>
                   <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
-                    Our customized Naija Pot mobile kitchen serves live outdoor gatherings, corporate celebrations, weddings, community cultural festivals and sporting days with hot smokey grills, meat pies and party trays.
+                    Our customized Naija Pot mobile kitchen serves live outdoor gatherings, corporate celebrations, weddings, community cultural festivals and sporting days with hot smoky grills, tasty rice and lots of Naija warmth.
                   </p>
                   <div className="flex flex-wrap gap-2 pt-2">
                     <span className="text-[11px] bg-white/5 border border-white/10 text-[#45a866] px-3 py-1 rounded-full">
@@ -363,7 +344,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                   href={createWhatsAppUrl("Hello Naija Pot, I'd like to enquire about booking your Food Truck for an upcoming event.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+                  className="bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Book Food Truck on WhatsApp</span>
@@ -371,7 +352,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                 </a>
                 <button
                   onClick={() => onNavigate('specials')}
-                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2"
                 >
                   <span>View Platters</span>
                   <ArrowRight className="w-4 h-4" />
@@ -382,7 +363,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* The Naija Pot Promise */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
         <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase mb-3">
           THE NAIJA POT PROMISE
@@ -400,7 +380,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               Authentic flavour
             </h3>
             <p className="text-xs text-[#b9b4a8] leading-relaxed max-w-xs mx-auto">
-              Inspired by the traditional recipes, indigenous seasonings and slow-cooked culinary craft we know and cherish.
+              Inspired by traditional recipes, indigenous seasonings and slow-cooked culinary craft we know and cherish.
             </p>
           </div>
 
