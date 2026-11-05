@@ -28,47 +28,60 @@
   }
 }
 
-.font-serif {
-  font-family: var(--serif);
+.font-serif { font-family: var(--serif); }
+.font-sans { font-family: var(--sans); }
+
+/* Product imagery stays fully visible instead of being cropped or zoomed. */
+.dish-card img,
+.bakery-product-card img,
+.menu-card img {
+  object-fit: contain;
+  transform: none;
 }
 
-.font-sans {
-  font-family: var(--sans);
+.dish-card:hover img,
+.bakery-product-card:hover img,
+.menu-card:hover img {
+  transform: none;
+  filter: none;
 }
 
-/* Custom styling for cards & hover animations matching original site */
-.dish-card, .bakery-product-card, .menu-card {
+/* Keep bread and cake out of the menu's bakery listing. */
+.dish-card:has(img[src*="Load-Bread"], img[src*="Bread-450"], img[src*="Cake-450"]) {
+  display: none;
+}
+
+/* Give both food-truck feature images a larger, complete view. */
+div:has(> img[alt*="Food Truck"], > img[alt*="Food Truck mobile catering"]) {
+  height: clamp(24rem, 55vw, 36rem) !important;
+  padding: 0 !important;
+}
+
+img[alt*="Food Truck"],
+img[alt*="Food Truck mobile catering"] {
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+.menu-card,
+.dish-card,
+.bakery-product-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-.dish-card:hover, .bakery-product-card:hover, .menu-card:hover {
+.dish-card:hover,
+.bakery-product-card:hover,
+.menu-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
 }
 
-.dish-card img, .bakery-product-card img, .menu-card img {
-  transition: transform 0.5s ease, filter 0.35s ease;
-}
-
-.dish-card:hover img, .bakery-product-card:hover img, .menu-card:hover img {
-  transform: scale(1.04);
-  filter: saturate(1.06);
-}
-
 @keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-rise {
-  animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+.animate-rise { animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
