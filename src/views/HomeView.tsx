@@ -3,7 +3,7 @@ import { PageView } from '../types';
 import { HeroSlider } from '../components/HeroSlider';
 import { SquareFoodSlider } from '../components/SquareFoodSlider';
 import { createWhatsAppUrl } from '../data/menuData';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Truck, MapPin, Utensils, Calendar } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface HomeViewProps {
@@ -238,6 +238,146 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               <span>Ask about our specials</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Restaurant Kitchen & Food Truck Spotlight Section */}
+      <section className="bg-[#0e110a] py-20 lg:py-28 border-y border-[#d8ad53]/25">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase">
+              EXPERIENCE NAIJA POT IN PERSON & ON THE ROAD
+            </p>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight text-[#f6f0e4]">
+              Our Kitchen &amp; <em className="text-[#f2d58a] italic not-italic">Our Food Truck.</em>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
+              Whether you’re stepping into our warm Bradville restaurant for hot swallows and sizzling suya, or booking our famous Food Truck for outdoor events, weddings, and celebrations across the UK — authentic Naija taste is always guaranteed.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Spotlight 1: Bradville Restaurant & Kitchen */}
+            <article className="bg-[#141710] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group hover:border-[#d8ad53] transition-all">
+              <div>
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-black">
+                  <img
+                    src={getAssetUrl('assets/images/uploads/restaurant.jpg')}
+                    alt="Naija Pot Kitchen & Grill Restaurant Interior and Storefront in Bradville Milton Keynes"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={handleImageError}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#141710] via-black/30 to-transparent" />
+                  <span className="absolute top-4 left-4 bg-[#090a08]/90 text-[#f2d58a] border border-[#d8ad53]/40 text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                    <Utensils className="w-3 h-3 text-[#d8ad53]" />
+                    <span>Bradville Restaurant</span>
+                  </span>
+                  <span className="absolute bottom-4 left-4 text-xs font-serif font-bold text-[#f2d58a] bg-black/80 px-3 py-1 rounded-md border border-white/10">
+                    22 Eston Court, Bradville, Milton Keynes MK13 7DF
+                  </span>
+                </div>
+
+                <div className="p-6 sm:p-8 space-y-4">
+                  <h3 className="font-serif text-2xl font-bold text-[#f6f0e4]">
+                    Visit Our Bradville Restaurant &amp; Grill
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
+                    Come in for the unmistakable aroma of hot charcoal beef suya, bubbling pots of Egusi, Efo Riro, steaming party jollof and fresh-baked Sunday Agege bread. Dine-in and fast collection are available 7 days a week.
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#d8ad53] px-3 py-1 rounded-full">
+                      All day in the week 9am–11pm
+                    </span>
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#d8ad53] px-3 py-1 rounded-full">
+                      Eat-in &amp; Collection
+                    </span>
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#d8ad53] px-3 py-1 rounded-full">
+                      Charcoal Grill Open
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-8 pt-0 flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => onNavigate('contact')}
+                  className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <MapPin className="w-4 h-4" />
+                  <span>Find Us &amp; Contact</span>
+                </button>
+                <button
+                  onClick={() => onNavigate('menu')}
+                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <span>Explore Menu</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </article>
+
+            {/* Spotlight 2: The Naija Pot Food Truck (Food Tank) */}
+            <article className="bg-[#141710] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col justify-between group hover:border-[#d8ad53] transition-all">
+              <div>
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-black flex items-center justify-center">
+                  <img
+                    src={getAssetUrl('assets/images/uploads/Food-Truck.png')}
+                    alt="The Official Naija Pot Food Truck / Food Tank for Outdoor Festivals and Catering"
+                    className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105"
+                    onError={handleImageError}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#141710] via-black/20 to-transparent pointer-events-none" />
+                  <span className="absolute top-4 left-4 bg-[#19834b] text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                    <Truck className="w-3 h-3" />
+                    <span>Naija Pot Food Truck</span>
+                  </span>
+                  <span className="absolute bottom-4 left-4 text-xs font-serif font-bold text-[#f2d58a] bg-black/80 px-3 py-1 rounded-md border border-white/10">
+                    Mobile Events Catering · UK Festivals · Parties
+                  </span>
+                </div>
+
+                <div className="p-6 sm:p-8 space-y-4">
+                  <h3 className="font-serif text-2xl font-bold text-[#f6f0e4]">
+                    The Naija Pot Food Truck &amp; Outdoor Catering
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
+                    Our customized Naija Pot mobile kitchen serves live outdoor gatherings, corporate celebrations, weddings, community cultural festivals and sporting days with hot smokey grills, meat pies and party trays.
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#45a866] px-3 py-1 rounded-full">
+                      Mobile Live Grilling
+                    </span>
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#45a866] px-3 py-1 rounded-full">
+                      Festival Bookings
+                    </span>
+                    <span className="text-[11px] bg-white/5 border border-white/10 text-[#45a866] px-3 py-1 rounded-full">
+                      Weddings &amp; Birthdays
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-8 pt-0 flex flex-wrap items-center gap-3">
+                <a
+                  href={createWhatsAppUrl("Hello Naija Pot, I'd like to enquire about booking your Food Truck for an upcoming event.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <Calendar className="w-4 h-4" />
+                  <span>Book Food Truck on WhatsApp</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+                <button
+                  onClick={() => onNavigate('specials')}
+                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <span>View Platters</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </article>
           </div>
         </div>
       </section>

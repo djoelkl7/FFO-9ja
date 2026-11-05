@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PageView, Dish, CartItem } from './types';
+import { PageView, Dish, CartItem, MenuCategoryId } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
@@ -14,6 +14,7 @@ import { ContactView } from './views/ContactView';
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
+  const [menuInitialCategory, setMenuInitialCategory] = useState<MenuCategoryId | undefined>(undefined);
   const [solidModalDish, setSolidModalDish] = useState<Dish | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -38,9 +39,21 @@ export const App: React.FC = () => {
   // Sync hash routing on load & popstate
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact'].includes(hash)) {
-        setCurrentPage(hash as PageView);
+      const rawHash = window.location.hash.replace('#', '').toLowerCase();
+      if (rawHash === 'bakery' || rawHash === 'bakery-page' || rawHash === 'bakery-hub') {
+        setCurrentPage('bakery');
+        return;
+      }
+      if (rawHash === 'menu-bakery') {
+        setCurrentPage('menu');
+        setMenuInitialCategory('bakery');
+        return;
+      }
+      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact'].includes(rawHash)) {
+        if (rawHash === 'menu') {
+          setMenuInitialCategory('all');
+        }
+        setCurrentPage(rawHash as PageView);
       }
     };
 
@@ -50,8 +63,19 @@ export const App: React.FC = () => {
   }, []);
 
   const navigateTo = (page: PageView) => {
+    if (page === 'menu') {
+      setMenuInitialCategory('all');
+    }
     setCurrentPage(page);
     window.location.hash = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToMenuCategory = (category: MenuCategoryId) => {
+    setMenuInitialCategory(category);
+    setCurrentPage('menu');
+    window.location.hash = category === 'bakery' ? 'bakery' : `menu-${category}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddToCart = (item: Omit<CartItem, 'cartId'>) => {
@@ -110,13 +134,30 @@ export const App: React.FC = () => {
         {currentPage === 'story' && <StoryView onNavigate={navigateTo} />}
         {currentPage === 'menu' && (
           <MenuView
+            initialCategory={menuInitialCategory}
             onOpenSolidModal={(dish) => setSolidModalDish(dish)}
             onAddToCart={handleAddToCart}
           />
         )}
-        {currentPage === 'bakery' && <BakeryView onAddToCart={handleAddToCart} />}
-        {currentPage === 'specials' && <SpecialsView onNavigate={navigateTo} />}
-        {currentPage === 'contact' && <ContactView onNavigate={navigateTo} />}
+        {currentPage === 'bakery' && (
+          <BakeryView
+            onAddToCart={handleAddToCart}
+            onNavigateToMenuCategory={navigateToMenuCategory}
+            onNavigate={navigateTo}
+          />
+        )}
+        {currentPage === 'specials' && (
+          <SpecialsView
+            onNavigate={navigateTo}
+            onAddToCart={handleAddToCart}
+          />
+        )}
+        {currentPage === 'contact' && (
+          <ContactView
+            onNavigate={navigateTo}
+            onOpenCart={() => setIsCartOpen(true)}
+          />
+        )}
       </main>
 
       {/* Footer */}

@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { CartItem, BakeryProduct } from '../types';
+import { CartItem, BakeryProduct, MenuCategoryId, PageView } from '../types';
 import { BAKERY_PRODUCTS, RESTAURANT_INFO, createWhatsAppUrl } from '../data/menuData';
-import { ArrowUpRight, Plus, Check, Clock, Phone, MapPin } from 'lucide-react';
+import { ArrowUpRight, Plus, Check, Clock, Phone, MapPin, ArrowRight } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface BakeryViewProps {
   onAddToCart: (item: Omit<CartItem, 'cartId'>) => void;
+  onNavigateToMenuCategory?: (category: MenuCategoryId) => void;
+  onNavigate?: (page: PageView) => void;
 }
 
-export const BakeryView: React.FC<BakeryViewProps> = ({ onAddToCart }) => {
+export const BakeryView: React.FC<BakeryViewProps> = ({
+  onAddToCart,
+  onNavigateToMenuCategory,
+  onNavigate,
+}) => {
   const [addedItemIds, setAddedItemIds] = useState<Record<string, boolean>>({});
 
   const handleAddBakeryItem = (product: BakeryProduct) => {
@@ -56,6 +62,20 @@ export const BakeryView: React.FC<BakeryViewProps> = ({ onAddToCart }) => {
               >
                 Explore the bakery
               </a>
+              <button
+                onClick={() => {
+                  if (onNavigateToMenuCategory) {
+                    onNavigateToMenuCategory('bakery');
+                  } else if (onNavigate) {
+                    onNavigate('menu');
+                  }
+                  window.location.hash = 'bakery';
+                }}
+                className="bg-[#19834b] hover:bg-[#1f9e5b] text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2 cursor-pointer"
+              >
+                <span>View full menu</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
               <a
                 href="#bakery-order"
                 className="border border-[#f2d58a]/75 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all"

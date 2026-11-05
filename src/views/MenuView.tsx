@@ -1,19 +1,30 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Dish, MenuCategoryId, CartItem } from '../types';
 import { DISHES, CATEGORIES, createWhatsAppUrl } from '../data/menuData';
 import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface MenuViewProps {
+  initialCategory?: MenuCategoryId;
   onOpenSolidModal: (dish: Dish) => void;
   onAddToCart: (item: Omit<CartItem, 'cartId'>) => void;
 }
 
 export const MenuView: React.FC<MenuViewProps> = ({
+  initialCategory,
   onOpenSolidModal,
   onAddToCart,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>('all');
+  const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>(
+    initialCategory || 'all'
+  );
+
+  useEffect(() => {
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [addedItemIds, setAddedItemIds] = useState<Record<string, boolean>>({});
 
@@ -34,7 +45,9 @@ export const MenuView: React.FC<MenuViewProps> = ({
   const filteredDishes = useMemo(() => {
     return DISHES.filter((dish) => {
       const matchesCategory =
-        selectedCategory === 'all' || dish.category === selectedCategory;
+        selectedCategory === 'all'
+          ? dish.category !== 'bakery'
+          : dish.category === selectedCategory;
       const matchesSearch =
         dish.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         dish.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -42,13 +55,13 @@ export const MenuView: React.FC<MenuViewProps> = ({
     });
   }, [selectedCategory, searchQuery]);
 
-  // Group dishes by category when "all" is selected so it displays category headers with numbers
+  // Group dishes by category when "all" is selected (starting with 01 The Grill Hub; Bakery displays when clicked)
   const categoriesToDisplay = useMemo(() => {
     if (selectedCategory !== 'all') {
       const cat = CATEGORIES.find((c) => c.id === selectedCategory);
       return cat ? [cat] : [];
     }
-    return CATEGORIES.filter((c) => c.id !== 'all');
+    return CATEGORIES.filter((c) => c.id !== 'all' && c.id !== 'bakery');
   }, [selectedCategory]);
 
   return (
