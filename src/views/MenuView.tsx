@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Dish, MenuCategoryId, CartItem, PageView } from '../types';
 import { DISHES, CATEGORIES, createWhatsAppUrl } from '../data/menuData';
-import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check, ArrowRight } from 'lucide-react';
+import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check, ArrowRight, X } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
 interface MenuViewProps {
@@ -103,10 +103,20 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
   const [selectedCategory, setSelectedCategory] = useState<MenuCategoryId>(initialCategory || 'all');
   const [searchQuery, setSearchQuery] = useState('');
   const [addedItemIds, setAddedItemIds] = useState<Record<string, boolean>>({});
+  const [previewDish, setPreviewDish] = useState<Dish | null>(null);
 
   useEffect(() => {
     if (initialCategory) setSelectedCategory(initialCategory);
   }, [initialCategory]);
+
+  useEffect(() => {
+    if (!previewDish) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPreviewDish(null);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [previewDish]);
 
   const handleQuickAdd = (dish: Dish) => {
     onAddToCart({ id: dish.id, name: dish.name, price: dish.numericPrice, quantity: 1, image: dish.image });
@@ -179,7 +189,7 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase">MADE FRESH, SERVED WITH LOVE</p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f6f0e4]">Find your <em className="text-[#f2d58a] italic not-italic">new favourite.</em></h2>
-            <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">Choose a category, search the menu, and add dishes to your order tray.</p>
+            <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">Choose a category, search the menu, and add dishes to your order tray. Select a food image to preview it in full size.</p>
           </div>
           <div className="space-y-4">
             <div className="max-w-lg mx-auto relative">
@@ -197,9 +207,7 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
           </div>
 
           {categoriesToDisplay.map((category) => {
-            const dishes = selectedCategory === 'bakery'
-              ? filteredDishes
-              : filteredDishes.filter((dish) => dish.category === category.id);
+            const dishes = selectedCategory === 'bakery' ? filteredDishes : filteredDishes.filter((dish) => dish.category === category.id);
             if (!dishes.length) return null;
             return (
               <div key={category.id} className="pt-6 space-y-6">
@@ -212,11 +220,16 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
                     const isAdded = addedItemIds[dish.id];
                     return (
                       <article key={dish.id} className="dish-card">
-                        <div className="dish-image-frame">
+                        <button
+                          type="button"
+                          className="dish-image-frame cursor-zoom-in border-0 p-0 text-left"
+                          onClick={() => setPreviewDish(dish)}
+                          aria-label={`Preview full-size image of ${dish.name}`}
+                        >
                           <img src={dish.image} alt={dish.name} className="dish-product-image" loading="lazy" onError={handleImageError} />
                           {dish.tag && <span className="dish-tag">{dish.tag}</span>}
                           <span className="dish-price-badge">{dish.price}</span>
-                        </div>
+                        </button>
                         <div className="dish-content">
                           <div><h4 className="dish-name">{dish.name}</h4><p className="dish-desc">{dish.description}</p></div>
                           <div className="dish-footer">
@@ -265,6 +278,28 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
           </div>
         </div>
       </section>
+
+      {previewDish && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Full-size preview: ${previewDish.name}`}
+          onClick={() => setPreviewDish(null)}
+        >
+          <button type="button" onClick={() => setPreviewDish(null)} className="absolute right-4 top-4 z-10 rounded-full bg-[#141711] p-3 text-[#f6f0e4] hover:bg-[#252a20]" aria-label="Close image preview">
+            <X className="h-6 w-6" />
+          </button>
+          <div className="flex max-h-full w-full max-w-6xl flex-col items-center gap-3" onClick={(event) => event.stopPropagation()}>
+            <img src={previewDish.image} alt={previewDish.name} className="max-h-[80vh] max-w-full object-contain" onError={handleImageError} />
+            <div className="flex w-full max-w-4xl items-center justify-between gap-4 text-[#f6f0e4]">
+              <h2 className="font-serif text-lg sm:text-2xl font-bold">{previewDish.name}</h2>
+              <span className="shrink-0 rounded bg-[#19834b] px-3 py-1 font-serif font-bold text-[#f2d58a]">{previewDish.price}</span>
+            </div>
+            <p className="w-full max-w-4xl text-sm text-[#b9b4a8]">{previewDish.description}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
