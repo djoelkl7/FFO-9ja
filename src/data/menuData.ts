@@ -85,7 +85,7 @@ export const DISHES: Dish[] = [
     price: '£8.00',
     numericPrice: 8.0,
     description: 'Smoky turkey wings tossed in rich peppered sauce.',
-    image: img('Grilled-Chicken-Wings-450x450.jpg'),
+    image: img('peppered-turkey.jpg'),
   },
   {
     id: 'grilled-chicken-wings',
@@ -343,7 +343,7 @@ export const DISHES: Dish[] = [
     price: '£30.00',
     numericPrice: 30.0,
     description: 'Whole grilled or fried croaker with fried plantain, yam (or both) and chilli sauce.',
-    image: img('Tilapia-FIsh-450x450.jpg'),
+    image: img('croaker-fish.jpg'),
   },
   {
     id: 'tilapia-fish-whole',
