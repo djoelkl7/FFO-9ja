@@ -13,6 +13,7 @@
     --muted: #b9b4a8;
     --serif: 'Playfair Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 18px; /* Base 16px + 2px, scaling preset rem typography consistently. */
   }
 
   html {
@@ -22,201 +23,68 @@
     color: var(--cream);
   }
 
-  body {
-    margin: 0;
-    line-height: 1.65;
-  }
+  body { margin: 0; line-height: 1.65; }
 }
 
 .font-serif { font-family: var(--serif); }
 .font-sans { font-family: var(--sans); }
 
-/* Product imagery stays fully visible instead of being cropped or zoomed. */
-.dish-card img,
-.bakery-product-card img,
-.menu-card img {
-  object-fit: contain;
-  transform: none;
+/* Home page: remove the Bradville restaurant feature, retain the food truck feature full-width. */
+article:has(> div img[alt*="Restaurant Interior and Storefront"]) { display: none !important; }
+.grid:has(> article img[alt*="Food Truck / Food Tank"]) { grid-template-columns: minmax(0, 1fr) !important; }
+
+/* Responsive, accessible menu product cards. */
+.dish-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
 }
 
-.dish-card:hover img,
-.bakery-product-card:hover img,
-.menu-card:hover img {
-  transform: none;
-  filter: none;
-}
-
-/* Keep bread and cake out of the menu's bakery listing. */
-.dish-card:has(img[src*="Load-Bread"], img[src*="Bread-450"], img[src*="Cake-450"]) {
-  display: none;
-}
-
-/* Give both food-truck feature images a larger, complete view. */
-div:has(> img[alt*="Food Truck"], > img[alt*="Food Truck mobile catering"]) {
-  height: clamp(24rem, 55vw, 36rem) !important;
-  padding: 0 !important;
-}
-
-img[alt*="Food Truck"],
-img[alt*="Food Truck mobile catering"] {
-  object-fit: contain !important;
-  transform: none !important;
-}
-
-/* Menu product display: responsive cards, square image frames, and clear content hierarchy. */
 .dish-card {
   display: flex;
   flex-direction: column;
   min-width: 0;
   height: 100%;
   overflow: hidden;
-  border-radius: 12px;
   background: #262626;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
 
-/* The first child of each menu card is the image frame in MenuView. */
-.dish-card > div:first-child {
-  position: relative;
-  width: 100%;
-  height: auto !important;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: #333;
-}
+.dish-card:hover { border-color: rgba(198,161,91,.5); box-shadow: 0 16px 36px rgba(0,0,0,.35); transform: translateY(-3px); }
+.dish-image-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #20251b; }
+.dish-product-image { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; transition: transform .5s ease; }
+.dish-card:hover .dish-product-image { transform: scale(1.04); }
+.dish-image-frame .dish-tag { position: absolute; top: 14px; left: 14px; z-index: 3; display: inline-flex; width: auto; height: auto; padding: 7px 12px; background: rgba(9,10,8,.9); color: #f2d58a; border: 1px solid rgba(198,161,91,.35); border-radius: 7px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.dish-image-frame .dish-price-badge { position: absolute; right: 14px; bottom: 14px; z-index: 4; display: inline-flex; align-items: center; justify-content: center; width: fit-content; padding: 9px 16px; background: #19834b; color: #f2d58a; border-radius: 8px; font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; line-height: 1.3; white-space: nowrap; }
+.dish-content { display: flex; flex: 1; flex-direction: column; justify-content: space-between; gap: 20px; padding: 22px; }
+.dish-name { margin: 0 0 10px; color: #f6f0e4; font-family: 'Playfair Display', serif; font-size: 21px; line-height: 1.4; font-weight: 700; }
+.dish-desc { margin: 0 0 12px; color: #b9b4a8; font-size: 15px; line-height: 1.7; }
+.dish-footer { display: flex; align-items: stretch; gap: 10px; margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); }
+.dish-add-button, .dish-order-button { display: inline-flex; flex: 1; align-items: center; justify-content: center; gap: 7px; min-width: 0; padding: 13px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; text-decoration: none; }
+.dish-add-button { background: #22281c; border: 1px solid rgba(198,161,91,.45); color: #f2d58a; }
+.dish-add-button.is-added { background: #19834b; color: #fff; }
+.dish-order-button { background: #d8ad53; color: #090a08; }
+.dish-order-button:hover { background: #e4bb61; }
 
-.dish-card > div:first-child img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.5s ease;
-}
+/* Floating contact control is only the WhatsApp icon; keep it easy to tap. */
+a[aria-label="Chat with Naija Pot on WhatsApp"] { width: 56px; height: 56px; padding: 0; justify-content: center; border-radius: 9999px; }
+a[aria-label="Chat with Naija Pot on WhatsApp"] svg { width: 30px; height: 30px; }
 
-.dish-card:hover > div:first-child img {
-  transform: scale(1.06);
-}
-
-/* Tags and prices remain legible above the image. */
-.dish-card > div:first-child > span:first-of-type {
-  top: 14px;
-  left: 14px;
-  z-index: 2;
-  padding: 7px 12px;
-  border-radius: 4px;
-  font-size: 11px;
-  letter-spacing: 1px;
-}
-
-.dish-card > div:first-child > span:last-of-type {
-  font-size: 20px;
-  font-weight: 700;
-  color: #C6A15B;
-}
-
-.dish-card > div:nth-child(2) {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.dish-card h4 {
-  margin-bottom: 10px;
-  font-size: 19px;
-  line-height: 1.4;
-}
-
-.dish-card p {
-  margin-bottom: 20px;
-  color: #b8b8b8;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.dish-card > div:nth-child(2) > div:last-child {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-}
-
-/* Target the menu card grids by their direct dish-card children. */
-div:has(> .dish-card) {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
-  align-items: stretch;
-}
-
-.menu-card,
-.dish-card,
-.bakery-product-card {
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.dish-card:hover,
-.bakery-product-card:hover,
-.menu-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-}
-
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-rise { animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-@media (max-width: 900px) {
-  div:has(> .dish-card) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-}
-
+@media (max-width: 900px) { .dish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } }
 @media (max-width: 600px) {
-  div:has(> .dish-card) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .dish-card > div:nth-child(2) {
-    padding: 12px;
-  }
-
-  .dish-card h4 {
-    font-size: 15px;
-  }
-
-  .dish-card p {
-    margin-bottom: 14px;
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  .dish-card > div:first-child {
-    aspect-ratio: 1 / 1;
-  }
-
-  .dish-card > div:first-child > span:first-of-type {
-    top: 8px;
-    left: 8px;
-    padding: 5px 8px;
-    font-size: 9px;
-  }
-
-  .dish-card > div:nth-child(2) > div:last-child {
-    flex-wrap: wrap;
-  }
+  .dish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .dish-content { padding: 14px; gap: 16px; }
+  .dish-name { font-size: 16px; }
+  .dish-desc { font-size: 13px; line-height: 1.6; }
+  .dish-image-frame .dish-price-badge { right: 9px; bottom: 9px; padding: 7px 10px; font-size: 15px; }
+  .dish-image-frame .dish-tag { top: 9px; left: 9px; padding: 5px 8px; font-size: 9px; }
+  .dish-footer { gap: 7px; }
+  .dish-add-button, .dish-order-button { padding: 11px 5px; font-size: 10px; letter-spacing: .5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
