@@ -10,20 +10,46 @@ interface BakeryViewProps {
   onNavigate?: (page: PageView) => void;
 }
 
+const bakeryDishIds = [
+  'meat-pie',
+  'puff-puff',
+  'small-chops-platter',
+  'sausage-roll',
+  'fish-roll',
+  'chicken-scotch-egg',
+] as const;
+
+const bakeryKickers: Record<string, string> = {
+  'meat-pie': '01 · FRESH FROM THE OVEN',
+  'puff-puff': '02 · GOLDEN & FRESH',
+  'small-chops-platter': '03 · MADE FOR SHARING',
+  'sausage-roll': '04 · SAVOURY BAKERY FAVOURITE',
+  'fish-roll': '05 · CRISPY & FLAVOURFUL',
+  'chicken-scotch-egg': '06 · A HEARTY SNACK',
+};
+
 const bakeryProducts: BakeryProduct[] = [
-  BAKERY_PRODUCTS.find((product) => product.id === 'naija-meat-pie')!,
-  (() => {
-    const puffPuff = DISHES.find((dish) => dish.id === 'puff-puff')!;
+  ...bakeryDishIds.map((id) => {
+    const dish = DISHES.find((item) => item.id === id)!;
     return {
-      id: puffPuff.id,
-      kicker: '02 · GOLDEN & FRESH',
-      name: 'Puff Puff',
-      description: puffPuff.description,
-      image: puffPuff.image,
-      tag: 'Sweet favourite',
-      price: puffPuff.price,
+      id: dish.id,
+      kicker: bakeryKickers[dish.id],
+      name: dish.name,
+      description: dish.description,
+      image: dish.image,
+      tag: dish.tag || 'Bakery favourite',
+      price: dish.price,
     };
-  })(),
+  }),
+  {
+    id: 'cake-mini-loaves-menu',
+    kicker: '07 · LITTLE MOMENTS',
+    name: 'Cake Mini Loaves',
+    description: 'Moist, gently sweet mini loaves — a thoughtful treat for guests, tea time or celebrating a sweet moment.',
+    image: BAKERY_PRODUCTS.find((product) => product.id === 'mini-cake-loaves')!.image,
+    tag: 'A sweet treat',
+    price: '£12.00',
+  },
 ];
 
 export const BakeryView: React.FC<BakeryViewProps> = ({
@@ -63,7 +89,7 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
               <em className="text-[#f2d58a] italic not-italic">Made to feel like home.</em>
             </h1>
             <p className="text-sm sm:text-base text-[#e4dfd4] max-w-lg leading-relaxed mb-6">
-              Flaky Nigerian meat pies and soft, golden puff puff — freshly made favourites from our kitchen.
+              Nigerian bakery favourites, savoury snacks and sweet treats — freshly made with care.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <a href="#bakery-collection" className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all shadow-md">
@@ -72,7 +98,7 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
               <button
                 onClick={() => {
                   if (onNavigateToMenuCategory) onNavigateToMenuCategory('bakery');
-                  else onNavigate?.('menu');
+                  else if (onNavigate) onNavigate('menu');
                   window.location.hash = 'bakery';
                 }}
                 className="bg-[#19834b] hover:bg-[#1f9e5b] text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all shadow-md inline-flex items-center gap-2"
@@ -92,21 +118,16 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
           <div className="space-y-4">
             <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase">THE BAKERY COLLECTION</p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight text-[#f6f0e4]">
-              Two Naija classics.<br /><em className="text-[#f2d58a] italic not-italic">Fresh from our oven.</em>
+              Freshly made.<br /><em className="text-[#f2d58a] italic not-italic">Made to share.</em>
             </h2>
             <p className="text-sm text-[#b9b4a8] leading-relaxed">
-              Choose a savoury, flaky meat pie or a soft, sweet puff puff. Our bakery section is dedicated to these two much-loved Nigerian treats.
+              Choose from flaky meat pies, golden puff puff, cake mini loaves and a selection of savoury small chops.
             </p>
           </div>
           <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl relative h-80 sm:h-96 bg-[#181c14] flex items-center justify-center">
-            <img
-              src={getAssetUrl('assets/images/uploads/Puff-Puff-450x450.jpg')}
-              alt="Fresh Nigerian puff puff"
-              className="w-full h-full object-contain p-3"
-              onError={handleImageError}
-            />
+            <img src={getAssetUrl('assets/images/uploads/Puff-Puff-450x450.jpg')} alt="Fresh Nigerian puff puff" className="w-full h-full object-contain p-3" onError={handleImageError} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5 pointer-events-none">
-              <span className="text-xs font-serif font-bold text-[#f2d58a]">Meat pie &amp; puff puff · made with Naija love</span>
+              <span className="text-xs font-serif font-bold text-[#f2d58a]">Bakery favourites made with Naija love</span>
             </div>
           </div>
         </div>
@@ -117,20 +138,20 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <p className="text-[11px] font-bold tracking-[0.24em] text-[#45a866] uppercase">BAKED WITH CARE</p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#f6f0e4]">
-              Meat pie <em className="text-[#f2d58a] italic not-italic">&amp; puff puff.</em>
+              Bakery favourites <em className="text-[#f2d58a] italic not-italic">&amp; more.</em>
             </h2>
             <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
-              Pick a bakery favourite, add it to your order tray or ask us about availability.
+              Add bakery and small-chop favourites to your order tray or enquire about availability.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {bakeryProducts.map((product) => {
               const isAdded = addedItemIds[product.id];
               return (
-                <article key={product.id} className="bakery-product-card bg-[#181c14] rounded-xl overflow-hidden border border-white/5 hover:border-[#d8ad53]/40 shadow-lg flex flex-col">
+                <article key={product.id} className="bakery-product-card bg-[#181c14] rounded-xl overflow-hidden border border-white/5 hover:border-[#d8ad53]/40 shadow-lg flex flex-col justify-between">
                   <div className="relative h-72 sm:h-80 bg-[#20251b] overflow-hidden">
-                    <img src={product.id === 'naija-meat-pie' ? getAssetUrl('assets/images/uploads/Meatpie-450x450.jpg') : getAssetUrl('assets/images/uploads/Puff-Puff-450x450.jpg')} alt={product.name} className="w-full h-full object-contain p-3" onError={handleImageError} />
+                    <img src={product.image} alt={product.name} className="w-full h-full object-contain p-3" onError={handleImageError} />
                     <span className="absolute top-3 left-3 bg-[#090a08]/85 text-[#f2d58a] text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded shadow-md border border-[#d8ad53]/20">{product.tag}</span>
                     {product.price && <span className="absolute bottom-3 right-3 bg-[#19834b] text-white font-serif font-bold text-sm px-2.5 py-0.5 rounded shadow">{product.price}</span>}
                   </div>
@@ -169,9 +190,7 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
             <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-[#d8ad53]" /><a href={`tel:${RESTAURANT_INFO.phone}`} className="hover:underline">Direct phone: {RESTAURANT_INFO.phone}</a></div>
             <div className="flex items-start gap-2"><MapPin className="w-4 h-4 text-[#d8ad53] shrink-0 mt-0.5" /><span>{RESTAURANT_INFO.address}</span></div>
             <div className="flex items-start gap-2"><Clock className="w-4 h-4 text-[#d8ad53] shrink-0 mt-0.5" /><span>{RESTAURANT_INFO.openingHoursDisplay}</span></div>
-            <div className="pt-2"><a href={createWhatsAppUrl('Hello Naija Pot, I would like to ask about meat pies and puff puff.')} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider py-3 rounded transition-all shadow">
-              <span>Send bakery enquiry</span><ArrowUpRight className="w-4 h-4" />
-            </a></div>
+            <div className="pt-2"><a href={createWhatsAppUrl('Hello Naija Pot, I would like to ask about bakery and small-chop items.')} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider py-3 rounded transition-all shadow"><span>Send bakery enquiry</span><ArrowUpRight className="w-4 h-4" /></a></div>
           </div>
         </div>
       </section>
