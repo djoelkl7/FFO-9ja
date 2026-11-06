@@ -61,10 +61,11 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
 
   const handleAddBakeryItem = (product: BakeryProduct) => {
     const numericPrice = product.price ? parseFloat(product.price.replace('£', '')) : 3.0;
+    const dish = DISHES.find((item) => item.id === product.id);
     onAddToCart({
       id: product.id,
       name: product.name,
-      price: numericPrice,
+      price: dish?.numericPrice ?? numericPrice,
       quantity: 1,
       image: product.image,
     });
@@ -99,7 +100,6 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
                 onClick={() => {
                   if (onNavigateToMenuCategory) onNavigateToMenuCategory('bakery');
                   else if (onNavigate) onNavigate('menu');
-                  window.location.hash = 'bakery';
                 }}
                 className="bg-[#19834b] hover:bg-[#1f9e5b] text-white font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all shadow-md inline-flex items-center gap-2"
               >
