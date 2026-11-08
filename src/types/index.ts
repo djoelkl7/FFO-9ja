@@ -21,7 +21,10 @@ export type MenuCategoryId =
   | 'small-chops-and-platters'
   | 'snacks-and-extras'
   | 'bakery'
-  | 'drinks';
+  | 'drinks'
+  | 'breakfast-appetisers'
+  | 'soup-dishes'
+  | 'carting-event';
 
 export interface CategoryInfo {
   id: MenuCategoryId;

@@ -15,6 +15,7 @@ import {
   MapPin,
   Calendar,
   Sparkles,
+  MessageCircle,
 } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
 
@@ -357,65 +358,68 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate, onAddToC
                     <span className="font-serif text-sm font-bold">Fresh Daily</span>
                   </div>
                   <h4 className="font-serif font-bold text-sm text-[#f6f0e4]">Full Menu Reach</h4>
-                  <p className="text-[11px] text-[#b9b4a8]">Party jollof, swallows, small chops, and soft Agege bread.</p>
+                  <p className="text-[11px] text-[#b9b4a8]">Party jollof, swallows, small chops, and golden pastries.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Restaurant & Food Truck Spotlight for Events */}
+          {/* The Naija Pot Food Truck & Event Catering Spotlight */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-[#141711] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
               <div>
-                <div className="relative h-60 bg-black">
+                <div className="relative h-64 sm:h-72 bg-black">
                   <img
-                    src={getAssetUrl('assets/images/uploads/restaurant.jpg')}
-                    alt="Dine-in private parties at Bradville restaurant"
+                    src={getAssetUrl('assets/images/uploads/Carting-Event.JPG')}
+                    alt="Carting Event by Naija Pot Catering"
                     className="w-full h-full object-cover"
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141711] via-transparent to-transparent" />
                   <span className="absolute top-4 left-4 bg-black/80 text-[#f2d58a] text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-white/10">
-                    Bradville Restaurant Banquets
+                    Carting Event &amp; Catering
                   </span>
                 </div>
                 <div className="p-6 space-y-3">
                   <h3 className="font-serif text-xl font-bold text-[#f6f0e4]">
-                    Host Your Gathering at Bradville
+                    Naija Kitchen Pot caterers providing catering services for Weddings, Corporate/ Private Events and Funerals
                   </h3>
                   <p className="text-xs text-[#b9b4a8] leading-relaxed">
-                    Book tables or our dining area for birthday celebrations, anniversary dinners and family get-togethers right at 22 Eston Court, Bradville.
+                    Event Catering Group based in Milton Keynes provides a full range of catering services for all types of events including Private Events, Weddings, Corporate and Funeral catering, Mobile bars and Equipment Hire. We provide a huge range of delicious food including Canapes, Finger Food, Paella, Spit Roast and many more.
                   </p>
                 </div>
               </div>
               <div className="p-6 pt-0">
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="w-full bg-[#1e2318] hover:bg-[#283020] border border-[#d8ad53]/40 text-[#f2d58a] font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                <a
+                  href={createWhatsAppUrl('Hello Naija Pot, I would like to book Event Catering for an upcoming event.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg transition-all shadow flex items-center justify-center gap-2"
                 >
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>Restaurant Directions &amp; Contact</span>
-                </button>
+                  <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                  <span>Book Event Catering On WHATSAPP</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
 
             <div className="bg-[#141711] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
               <div>
-                <div className="relative h-60 bg-black flex items-center justify-center p-4">
+                <div className="relative h-64 sm:h-72 bg-black flex items-center justify-center p-2 overflow-hidden">
                   <img
                     src={getAssetUrl('assets/images/uploads/Food-Truck.png')}
-                    alt="Naija Pot Food Truck mobile catering"
-                    className="w-full h-full object-contain"
+                    alt="The Official Naija Pot Food Truck / Food Tank for Outdoor Festivals and Catering"
+                    className="w-full h-full object-contain scale-110 sm:scale-125 transition-transform duration-700 hover:scale-135"
                     onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141711] via-transparent to-transparent pointer-events-none" />
                   <span className="absolute top-4 left-4 bg-[#19834b] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow">
-                    Mobile Events Food Truck
+                    MOBILE EVENTS FOOD TRUCK
                   </span>
                 </div>
                 <div className="p-6 space-y-3">
                   <h3 className="font-serif text-xl font-bold text-[#f6f0e4]">
-                    The Official Naija Pot Food Truck
+                    MOBILE EVENTS FOOD TRUCK
                   </h3>
                   <p className="text-xs text-[#b9b4a8] leading-relaxed">
                     Hire our fully equipped mobile kitchen for outdoor UK festivals, weddings, cultural celebrations and large corporate events.
@@ -427,7 +431,7 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate, onAddToC
                   href={createWhatsAppUrl("Hello Naija Pot, I would like to enquire about hiring your Food Truck for an outdoor event.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition-all shadow flex items-center justify-center gap-2"
+                  className="w-full bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg transition-all shadow flex items-center justify-center gap-2"
                 >
                   <Truck className="w-3.5 h-3.5" />
                   <span>Book Food Truck on WhatsApp</span>
@@ -519,7 +523,7 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate, onAddToC
                 'Asun (Spicy Goat) Platter',
                 'Whole Charcoal Tilapia',
                 'Assorted Soups & Swallows',
-                'Fresh Agege Bread & Meat Pies',
+                'Fresh Bakery & Meat Pies',
               ].map((item) => {
                 const isSelected = selectedPackages.includes(item);
                 return (
@@ -616,7 +620,7 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate, onAddToC
                 <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </h4>
               <p className="text-[11px] text-[#b9b4a8] mt-1">
-                Warm Agege bread loaf, Sunday rolls, golden meat pies &amp; cakes.
+                Golden meat pies, sweet puff puff and freshly baked pastries.
               </p>
             </button>
 

@@ -29,9 +29,27 @@
 .font-serif { font-family: var(--serif); }
 .font-sans { font-family: var(--sans); }
 
-/* Home page: remove the Bradville restaurant feature, retain the food truck feature full-width. */
-article:has(> div img[alt*="Restaurant Interior and Storefront"]) { display: none !important; }
-.grid:has(> article img[alt*="Food Truck / Food Tank"]) { grid-template-columns: minmax(0, 1fr) !important; }
+/* Mobile Events Food Truck image display & zoom */
+img[alt*="Food Truck"] {
+  transform-origin: center center;
+}
+
+/* Event Catering 3s Shake Animation */
+@keyframes catering-shake-3s {
+  0% { transform: scale(1) translate3d(0, 0, 0) rotate(0deg); }
+  3% { transform: scale(1.025) translate3d(-6px, 0, 0) rotate(-1.2deg); }
+  6% { transform: scale(1.025) translate3d(6px, 0, 0) rotate(1.2deg); }
+  9% { transform: scale(1.02) translate3d(-4px, 0, 0) rotate(-0.8deg); }
+  12% { transform: scale(1.02) translate3d(4px, 0, 0) rotate(0.8deg); }
+  15% { transform: scale(1.01) translate3d(-2px, 0, 0) rotate(-0.4deg); }
+  18% { transform: scale(1.01) translate3d(2px, 0, 0) rotate(0.4deg); }
+  22%, 100% { transform: scale(1) translate3d(0, 0, 0) rotate(0deg); }
+}
+
+.shake-3s-animation {
+  animation: catering-shake-3s 3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: center center;
+}
 
 /* Responsive, accessible menu product cards. */
 .dish-grid {

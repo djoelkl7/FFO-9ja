@@ -246,7 +246,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate, onOpenCart
                 >
                   <option value="Order For Today">Order For Today</option>
                   <option value="Swallow & Soup Pairing Enquiry">Swallow & Soup Pairing Enquiry</option>
-                  <option value="Bakery & Agege Bread Order">Bakery & Agege Bread Order</option>
+                  <option value="Bakery & Pastries Order">Bakery & Pastries Order</option>
                   <option value="Party Catering & Sharing Trays">Party Catering & Sharing Trays</option>
                   <option value="General Question">General Question</option>
                 </select>
@@ -335,7 +335,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate, onOpenCart
                 <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </h4>
               <p className="text-[11px] text-[#b9b4a8] mt-1">
-                Warm Agege loaf, Sunday tear &amp; share rolls, golden meat pies &amp; cakes.
+                Golden savoury meat pies and sweet pillowy puff puff made fresh.
               </p>
             </button>
 

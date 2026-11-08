@@ -3,6 +3,7 @@ import { Dish, MenuCategoryId, CartItem, PageView } from '../types';
 import { DISHES, CATEGORIES, createWhatsAppUrl } from '../data/menuData';
 import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check, ArrowRight, X } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
+import { CartingEventSlider } from '../components/CartingEventSlider';
 
 interface MenuViewProps {
   initialCategory?: MenuCategoryId;
@@ -14,7 +15,7 @@ interface MenuViewProps {
 const MENU_PRICE_OVERRIDES: Record<string, { price: string; numericPrice: number }> = {
   'suya-meat': { price: '£15.00', numericPrice: 15 },
   'asun-goat': { price: '£18.00', numericPrice: 18 },
-  'grilled-fish-main': { price: '£30.00', numericPrice: 30 },
+  'grilled-fish-main': { price: '£20.00', numericPrice: 20 },
   'chicken-suya-whole': { price: '£30.00', numericPrice: 30 },
   'peppered-turkey-wings': { price: '£8.00', numericPrice: 8 },
   'grilled-chicken-wings': { price: '£8.00', numericPrice: 8 },
@@ -70,9 +71,7 @@ const MENU_PRICE_OVERRIDES: Record<string, { price: string; numericPrice: number
 };
 
 const MENU_DISHES: Dish[] = [
-  ...DISHES
-    .filter((dish) => !['bakery-meat-pie', 'agege-loaf-bread', 'tear-and-share-bread', 'cake-mini-loaves'].includes(dish.id))
-    .map((dish) => ({ ...dish, ...(MENU_PRICE_OVERRIDES[dish.id] || {}) })),
+  ...DISHES.map((dish) => ({ ...dish, ...(MENU_PRICE_OVERRIDES[dish.id] || {}) })),
   {
     id: 'diet-coke-can', name: 'Diet Coke Can', category: 'drinks', price: '£1.50', numericPrice: 1.5,
     description: 'Chilled Diet Coke can.', image: getAssetUrl('assets/images/uploads/drinks/diet-coke.jpg'),
@@ -127,11 +126,10 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
   const filteredDishes = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     return MENU_DISHES.filter((dish) => {
-      const isBakeryItem = dish.id === 'meat-pie' || dish.id === 'puff-puff';
       const matchesCategory = selectedCategory === 'all'
         ? dish.category !== 'bakery'
         : selectedCategory === 'bakery'
-          ? isBakeryItem
+          ? dish.category === 'bakery'
           : dish.category === selectedCategory;
       const matchesSearch = !query || dish.name.toLowerCase().includes(query) || dish.description.toLowerCase().includes(query);
       return matchesCategory && matchesSearch;
@@ -208,7 +206,71 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
 
           {categoriesToDisplay.map((category) => {
             const dishes = selectedCategory === 'bakery' ? filteredDishes : filteredDishes.filter((dish) => dish.category === category.id);
-            if (!dishes.length) return null;
+            if (!dishes.length && category.id !== 'carting-event') return null;
+
+            if (category.id === 'carting-event') {
+              return (
+                <div key={category.id} className="pt-6 space-y-8">
+                  <div className="border-b border-[#d8ad53]/25 pb-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {category.num && <span className="font-serif text-lg font-bold text-[#45a866]">{category.num}</span>}
+                      <h3 className="font-serif text-2xl font-semibold text-[#f2d58a]">{category.name}</h3>
+                    </div>
+                    <span className="text-xs text-[#45a866] font-bold uppercase tracking-wider">Event Catering Service</span>
+                  </div>
+
+                  {/* Primary Carting Event Feature Hero */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#141710] border border-[#d8ad53]/35 rounded-2xl p-6 sm:p-8 shadow-2xl">
+                    <div className="lg:col-span-5 rounded-xl overflow-hidden border border-[#d8ad53]/25 relative h-72 sm:h-80 md:h-96 shadow-lg bg-black">
+                      <img
+                        src={getAssetUrl('assets/images/uploads/Carting-Event.JPG')}
+                        alt="Carting Event by Naija Pot Catering"
+                        className="w-full h-full object-cover"
+                        onError={handleImageError}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex items-end p-4">
+                        <span className="text-xs font-serif font-bold text-[#f2d58a]">Naija Kitchen Pot Event Catering</span>
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-7 space-y-4">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#45a866] bg-[#19834b]/15 px-3 py-1 rounded border border-[#45a866]/30 inline-block">
+                        WEDDINGS · CORPORATE · FUNERALS · PRIVATE PARTIES
+                      </span>
+                      <h4 className="font-serif text-2xl sm:text-3xl font-bold text-[#f6f0e4] leading-snug">
+                        Naija Kitchen Pot caterers providing catering services for Weddings, Corporate/ Private Events and Funerals
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#b9b4a8] leading-relaxed">
+                        Event Catering Group based in Milton Keynes provides a full range of catering services for all types of events including Private Events, Weddings, Corporate and Funeral catering, Mobile bars and Equipment Hire. We provide a huge range of delicious food including Canapes, Finger Food, Paella, Spit Roast and many more.
+                      </p>
+                      <div className="pt-2 flex flex-wrap items-center gap-3">
+                        <a
+                          href={createWhatsAppUrl('Hello Naija Pot, I would like to book Event Catering for an upcoming event.')}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg shadow-md transition-all transform hover:-translate-y-0.5"
+                        >
+                          <span>Book Event Catering On WHATSAPP</span>
+                          <ArrowUpRight className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3-Second Auto-Rotating Image Slider */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold tracking-wider text-[#d8ad53] uppercase">
+                        CATERING SERVICES GALLERY (3s ROTATING SLIDER)
+                      </p>
+                      <span className="text-[11px] text-[#b9b4a8]">Hover to pause</span>
+                    </div>
+                    <CartingEventSlider showInfoCard={false} />
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div key={category.id} className="pt-6 space-y-6">
                 <div className="border-b border-[#d8ad53]/25 pb-3 flex items-center justify-between">

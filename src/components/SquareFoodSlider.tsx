@@ -1,64 +1,74 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
-import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MessageCircle, Calendar } from 'lucide-react';
 import { PageView } from '../types';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
+import { createWhatsAppUrl } from '../data/menuData';
 
-export interface FoodSlide {
+export interface CateringSlide {
   id: string;
   name: string;
   category: string;
   tag: string;
-  price: string;
+  subtitle: string;
   image: string;
   description: string;
 }
 
-export const SLIDER_DISHES: FoodSlide[] = [
+export const CATERING_SLIDES: CateringSlide[] = [
   {
-    id: 'jollof-assorted',
-    name: 'Party Jollof & Assorted Meat',
-    category: 'Rice & Specials',
-    tag: 'Iconic Home Taste',
-    price: '£17.00',
-    image: getAssetUrl('assets/images/uploads/Jollof-with-assorted-meat-450x450.jpg'),
-    description: 'Smokey party jollof with fried plantain and tender assorted meat.',
+    id: 'catering-main',
+    name: 'Event Catering & Banquets',
+    category: 'Full Catering Group',
+    tag: 'Weddings & Corporate',
+    subtitle: 'Milton Keynes & UK-Wide',
+    image: getAssetUrl('assets/images/uploads/Carting-Event.JPG'),
+    description: 'Catering services for Weddings, Corporate/Private Events and Funerals.',
   },
   {
-    id: 'suya-beef',
-    name: 'Charcoal Suya Skewers',
-    category: 'From The Grill',
-    tag: 'Smokey & Spicy',
-    price: '£15.00',
-    image: getAssetUrl('assets/images/uploads/Suya-meat-450x450.jpg'),
-    description: 'Tender beef grilled over hot charcoal with northern yaji spice.',
+    id: 'catering-weddings',
+    name: 'Wedding & Reception Feasts',
+    category: 'Event Catering',
+    tag: 'Luxury Weddings',
+    subtitle: 'Lavish Table & Buffet Service',
+    image: getAssetUrl('assets/images/uploads/Carting-Event1.JPG'),
+    description: 'Bespoke Nigerian and fusion menus crafted for memorable celebration banquets.',
   },
   {
-    id: 'amala-swallow',
-    name: 'Yam Powder (Amala) & Soup',
-    category: 'Solid Dishes',
-    tag: 'Traditional Classic',
-    price: '£18.00',
-    image: getAssetUrl('assets/images/uploads/Amala-450x450.jpg'),
-    description: 'Smooth, steaming amala paired with rich Efo Riro or Ogbono.',
+    id: 'catering-corporate',
+    name: 'Corporate & Executive Events',
+    category: 'Event Catering',
+    tag: 'Corporate Banquets',
+    subtitle: 'Professional Live Setup',
+    image: getAssetUrl('assets/images/uploads/Carting-Event2.JPG'),
+    description: 'Hot chafing buffets, premium platters and refined hospitality for company events.',
   },
   {
-    id: 'naija-meatpie',
-    name: 'Golden Naija Meat Pie',
-    category: 'Bakery Treats',
-    tag: 'Fresh From Oven',
-    price: '£2.50',
-    image: getAssetUrl('assets/images/uploads/Meatpie-450x450.jpg'),
-    description: 'Buttery flaky pastry filled with seasoned minced meat & potato.',
+    id: 'catering-parties',
+    name: 'Private Celebrations & Banquets',
+    category: 'Event Catering',
+    tag: 'Private Gatherings',
+    subtitle: 'Birthdays & Family Feasts',
+    image: getAssetUrl('assets/images/uploads/Carting-Event3.JPG'),
+    description: 'Hearty party jollof, tender assorted meats, rich soups and celebration platters.',
   },
   {
-    id: 'asun-spicy-goat',
-    name: 'Hot & Spicy Goat (Asun)',
-    category: 'Grills Corner',
-    tag: 'Party Favourite',
-    price: '£18.00',
-    image: getAssetUrl('assets/images/uploads/Asun-450x450.jpg'),
-    description: 'Fire-grilled goat meat diced and tossed in scotch bonnet peppers.',
+    id: 'catering-live-food',
+    name: 'Spit Roast, Paella & Finger Food',
+    category: 'Event Catering',
+    tag: 'Live Outdoor Cooking',
+    subtitle: 'Canapes & Small Chops',
+    image: getAssetUrl('assets/images/uploads/Carting-Event4.JPG'),
+    description: 'Huge range of delicious food including Canapes, Finger Food, Paella and Spit Roast.',
+  },
+  {
+    id: 'catering-mobile-bars',
+    name: 'Mobile Bars & Equipment Hire',
+    category: 'Event Catering',
+    tag: 'Full Equipment Hire',
+    subtitle: 'Chafing Dishes & Bar Hire',
+    image: getAssetUrl('assets/images/uploads/Carting-Event5.JPG'),
+    description: 'Mobile bars, chafing dishes, equipment rental and professional event staffing.',
   },
 ];
 
@@ -71,47 +81,44 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
   const [isPaused, setIsPaused] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const slidesWrapperRef = useRef<HTMLDivElement>(null);
   const activeSlideRef = useRef<HTMLDivElement>(null);
   const textContentRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const timerTweenRef = useRef<gsap.core.Tween | null>(null);
 
-  const totalSlides = SLIDER_DISHES.length;
+  const totalSlides = CATERING_SLIDES.length;
 
-  // Animate slide transition with GSAP
+  // Transition to specific slide with synchronized GSAP animation
   const transitionToSlide = useCallback((nextIndex: number) => {
     if (!containerRef.current || !activeSlideRef.current) return;
 
     const currentSlide = activeSlideRef.current;
     const textEl = textContentRef.current;
 
-    // Timeline for coordinated slide and text transition
     const tl = gsap.timeline({
       onComplete: () => {
         setCurrentIndex(nextIndex);
       },
     });
 
-    // 1. Zoom out current slide and fade slightly
+    // Zoom out slide slightly on exit
     tl.to(currentSlide, {
-      scale: 0.94,
-      opacity: 0.4,
-      duration: 0.35,
+      scale: 0.95,
+      opacity: 0.5,
+      duration: 0.25,
       ease: 'power2.in',
     });
 
-    // 2. Animate out current text
     if (textEl) {
       tl.to(
         textEl,
         {
-          y: -15,
+          y: -10,
           opacity: 0,
-          duration: 0.25,
+          duration: 0.2,
           ease: 'power1.in',
         },
-        0.1
+        0.05
       );
     }
   }, []);
@@ -126,7 +133,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
     transitionToSlide(prev);
   }, [currentIndex, totalSlides, transitionToSlide]);
 
-  // Entrance animation when currentIndex changes
+  // Entrance and 3-second auto-cycle animation
   useEffect(() => {
     if (!activeSlideRef.current) return;
 
@@ -134,22 +141,30 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
     const textEl = textContentRef.current;
     const progressEl = progressBarRef.current;
 
-    // Entrance animation
-    gsap.fromTo(
-      slideEl,
-      { scale: 1.08, opacity: 0.5 },
-      { scale: 1, opacity: 1, duration: 0.65, ease: 'power2.out' }
-    );
+    // Entrance animation with punchy elastic shake feedback
+    const enterTl = gsap.timeline();
+    enterTl
+      .fromTo(
+        slideEl,
+        { scale: 1.05, opacity: 0.6 },
+        { scale: 1, opacity: 1, duration: 0.45, ease: 'power2.out' }
+      )
+      .fromTo(
+        slideEl,
+        { x: -5, rotation: -0.8 },
+        { x: 0, rotation: 0, duration: 0.4, ease: 'elastic.out(1.2, 0.3)' },
+        0.05
+      );
 
     if (textEl) {
       gsap.fromTo(
         textEl,
-        { y: 18, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.5)', delay: 0.15 }
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out', delay: 0.1 }
       );
     }
 
-    // Reset and start progress bar animation (4.5 seconds duration)
+    // 3-second progress timer as requested ("in 3sec animation")
     if (progressEl) {
       if (timerTweenRef.current) {
         timerTweenRef.current.kill();
@@ -160,7 +175,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
       if (!isPaused) {
         timerTweenRef.current = gsap.to(progressEl, {
           scaleX: 1,
-          duration: 4.5,
+          duration: 3.0, // 3-second interval
           ease: 'none',
           onComplete: () => {
             handleNext();
@@ -176,7 +191,6 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
     };
   }, [currentIndex, isPaused, handleNext]);
 
-  // Handle pause/resume
   const handleMouseEnter = () => {
     setIsPaused(true);
     if (timerTweenRef.current) {
@@ -191,134 +205,152 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
     }
   };
 
-  const currentDish = SLIDER_DISHES[currentIndex];
+  const currentSlide = CATERING_SLIDES[currentIndex];
 
   return (
     <div
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-[440px] mx-auto aspect-square rounded-2xl overflow-hidden border-2 border-[#d8ad53]/40 bg-[#12150f] shadow-[0_20px_50px_rgba(0,0,0,0.85)] group select-none"
-      aria-label="Naija Pot Signature Dishes Slider"
+      style={{ aspectRatio: '4 / 5' }}
+      className="relative w-full max-w-[420px] mx-auto aspect-[4/5] rounded-3xl overflow-hidden border-2 border-[#d8ad53]/45 bg-[#0f120c] shadow-[0_24px_60px_rgba(0,0,0,0.85)] group select-none transition-all duration-300 hover:border-[#d8ad53]"
+      aria-label="Event Catering 3-Second Showcase Slider"
+      role="region"
     >
-      {/* Top progress line indicating time to next slide */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-white/10 z-30 overflow-hidden">
-        <div ref={progressBarRef} className="h-full bg-gradient-to-r from-[#19834b] to-[#d8ad53]" />
+      {/* 3-Second Auto-change Progress Bar */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-black/40 z-30 overflow-hidden">
+        <div
+          ref={progressBarRef}
+          className="h-full bg-gradient-to-r from-[#19834b] via-[#45a866] to-[#d8ad53]"
+        />
       </div>
 
-      {/* Main Slide Image */}
-      <div ref={slidesWrapperRef} className="relative w-full h-full overflow-hidden">
-        <div ref={activeSlideRef} className="w-full h-full relative">
+      {/* Main Slide Image with 3-Second Shake Animation */}
+      <div className="relative w-full h-full overflow-hidden bg-black">
+        <div
+          ref={activeSlideRef}
+          className="w-full h-full relative overflow-hidden shake-3s-animation"
+        >
           <img
-            src={currentDish.image}
-            alt={currentDish.name}
-            className="w-full h-full object-cover"
+            src={currentSlide.image}
+            alt={currentSlide.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             onError={handleImageError}
           />
         </div>
       </div>
 
-      {/* Gradient Shading & Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#090a08] via-[#090a08]/40 to-transparent pointer-events-none z-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent pointer-events-none z-10" />
+      {/* Gradient Shading Overlays for Visual Clarity */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#090a08] via-[#090a08]/45 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent pointer-events-none z-10" />
 
-      {/* Top Floating Badges: Official Logo Watermark & Slide Counter */}
+      {/* Top Floating Header: EVENT CATERING Badge & 01 / 06 Counter */}
       <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
-        {/* Subtle Brand Crest Badge */}
-        <div className="flex items-center gap-2 bg-[#090a08]/85 backdrop-blur-md border border-[#d8ad53]/40 px-2.5 py-1 rounded-full shadow-lg">
-          <img
-            src={getAssetUrl('logo.png')}
-            alt="Naija Pot Seal"
-            className="w-5 h-5 rounded-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <span className="text-[10px] uppercase font-bold tracking-wider text-[#f2d58a]">
-            Naija Pot Favourites
+        <div className="flex items-center gap-2 bg-[#090a08]/90 backdrop-blur-md border border-[#d8ad53]/45 px-3 py-1.5 rounded-full shadow-lg">
+          <span className="w-2 h-2 rounded-full bg-[#20c76a] animate-pulse" />
+          <span className="text-[10px] sm:text-[11px] uppercase font-bold tracking-widest text-[#f2d58a]">
+            EVENT CATERING
           </span>
         </div>
 
-        {/* Slide Counter (e.g. 01 / 05) */}
-        <div className="bg-[#090a08]/85 backdrop-blur-md border border-white/10 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold text-[#b9b4a8] shadow">
+        {/* Slide Counter (e.g. 01 / 06) */}
+        <div className="bg-[#090a08]/90 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-mono font-bold text-[#b9b4a8] shadow">
           <span className="text-[#d8ad53]">0{currentIndex + 1}</span> / 0{totalSlides}
         </div>
       </div>
 
-      {/* Left / Right Interactive Arrow Controls */}
+      {/* Responsive Left / Right Navigation Controls */}
       <button
+        type="button"
         onClick={handlePrev}
-        className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-[#090a08]/80 hover:bg-[#d8ad53] border border-[#d8ad53]/40 text-[#f2d58a] hover:text-[#090a08] flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-110 shadow-lg cursor-pointer"
-        aria-label="Previous food photo"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#090a08]/85 hover:bg-[#d8ad53] border border-[#d8ad53]/40 text-[#f2d58a] hover:text-[#090a08] flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-xl cursor-pointer"
+        aria-label="Previous event catering slide"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
 
       <button
+        type="button"
         onClick={handleNext}
-        className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-[#090a08]/80 hover:bg-[#d8ad53] border border-[#d8ad53]/40 text-[#f2d58a] hover:text-[#090a08] flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-110 shadow-lg cursor-pointer"
-        aria-label="Next food photo"
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#090a08]/85 hover:bg-[#d8ad53] border border-[#d8ad53]/40 text-[#f2d58a] hover:text-[#090a08] flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-xl cursor-pointer"
+        aria-label="Next event catering slide"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Bottom Content Area with GSAP Text Container */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-5 space-y-2">
+      {/* Bottom Content Area with Slide Details */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 p-5 sm:p-6 space-y-3">
         <div ref={textContentRef} className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="bg-[#19834b] text-white text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded shadow">
-              {currentDish.tag}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="bg-[#19834b] text-white text-[9px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded shadow">
+              {currentSlide.tag}
             </span>
             <span className="text-[11px] font-semibold text-[#f2d58a] font-serif">
-              {currentDish.price}
+              {currentSlide.subtitle}
             </span>
           </div>
 
           <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#f6f0e4] leading-tight drop-shadow-md">
-            {currentDish.name}
+            {currentSlide.name}
           </h3>
 
-          <p className="text-xs text-[#e1ddd3]/90 line-clamp-1 text-shadow">
-            {currentDish.description}
+          <p className="text-xs sm:text-sm text-[#e1ddd3]/90 line-clamp-2 leading-relaxed">
+            {currentSlide.description}
           </p>
         </div>
 
-        {/* Footer Bar: 5 Dot Navigation & Explore CTA */}
-        <div className="pt-2 flex items-center justify-between border-t border-white/10">
-          {/* 5 Indicators */}
-          <div className="flex items-center gap-1.5">
-            {SLIDER_DISHES.map((slide, idx) => {
+        {/* Footer Bar: Responsive Dots Navigation & Action Buttons */}
+        <div className="pt-2 flex items-center justify-between border-t border-white/10 gap-3">
+          {/* Dot Indicators */}
+          <div className="flex items-center gap-1.5" aria-label="Event slide indicators">
+            {CATERING_SLIDES.map((slide, idx) => {
               const isActive = idx === currentIndex;
               return (
                 <button
                   key={slide.id}
+                  type="button"
                   onClick={() => transitionToSlide(idx)}
                   className={`h-1.5 rounded-full transition-all cursor-pointer ${
                     isActive ? 'w-6 bg-[#d8ad53]' : 'w-2 bg-white/30 hover:bg-white/60'
                   }`}
-                  aria-label={`Go to slide ${idx + 1}: ${slide.name}`}
+                  aria-label={`Go to catering slide ${idx + 1}: ${slide.name}`}
                 />
               );
             })}
           </div>
 
-          {/* Quick Menu Action */}
-          {onNavigate && (
-            <button
-              onClick={() => {
-                onNavigate('menu');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#d8ad53] hover:text-[#f2d58a] transition-colors cursor-pointer"
+          {/* Quick Event Booking / Navigation Links */}
+          <div className="flex items-center gap-2">
+            <a
+              href={createWhatsAppUrl(`Hello Naija Pot, I would like to book Event Catering for ${currentSlide.name}.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow transition-all transform hover:scale-105"
             >
-              <Eye className="w-3.5 h-3.5" />
-              <span>View Full Menu</span>
-            </button>
-          )}
+              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+              <span>Book Event</span>
+            </a>
+
+            {onNavigate && (
+              <button
+                type="button"
+                onClick={() => {
+                  onNavigate('menu');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#d8ad53] hover:text-[#f2d58a] transition-colors cursor-pointer"
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Menu</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Gold Signature Corner Stamp "A TASTE OF HOME" matching original screenshot */}
-      <span className="absolute bottom-0 right-0 bg-[#d8ad53] text-[#090a08] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 z-20 shadow-md">
-        A TASTE OF HOME
+      {/* Gold Signature Corner Stamp */}
+      <span className="absolute bottom-0 right-0 bg-[#d8ad53] text-[#090a08] text-[9px] font-bold tracking-widest uppercase px-3 py-1 z-20 shadow-md">
+        RATIO 4:5 · 3s SHAKE
       </span>
     </div>
   );
