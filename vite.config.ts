@@ -4,8 +4,21 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
-  // Use '/FFO-9ja/' for GitHub Pages repository builds, or VITE_BASE_URL override for cPanel
-  const base = process.env.VITE_BASE_URL || (command === 'build' ? '/FFO-9ja/' : '/');
+  // Determine base path for GitHub Pages, cPanel, or local development:
+  // 1. Explicit environment override via VITE_BASE_URL (e.g. './' for cPanel)
+  // 2. Automated GitHub Actions repository base (e.g. '/FFO-9ja/')
+  // 3. Fallback to '/FFO-9ja/' for build, or '/' for local dev server
+  let base = process.env.VITE_BASE_URL;
+  if (!base) {
+    if (process.env.GITHUB_REPOSITORY) {
+      const repoName = process.env.GITHUB_REPOSITORY.split('/')[1];
+      base = repoName.endsWith('.github.io') ? '/' : `/${repoName}/`;
+    } else if (command === 'build') {
+      base = '/FFO-9ja/';
+    } else {
+      base = '/';
+    }
+  }
 
   return {
     plugins: [react(), tailwindcss()],
@@ -22,6 +35,7 @@ export default defineConfig(({ command }) => {
     },
     build: {
       outDir: 'dist',
+      emptyOutDir: true,
       assetsDir: 'assets',
       sourcemap: false,
       rollupOptions: {

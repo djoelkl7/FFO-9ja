@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/post-build.js",
     "package:cpanel": "node scripts/package-cpanel.js",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
