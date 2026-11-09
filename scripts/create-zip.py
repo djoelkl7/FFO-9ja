@@ -24,7 +24,7 @@ def make_zip(source_dir, output_zip):
             # Exclude ignored directories in-place
             dirs[:] = [d for d in dirs if d not in IGNORED_NAMES]
             for file in files:
-                if file in IGNORED_NAMES or file.startswith('.env'):
+                if file in IGNORED_NAMES or file.startswith('.env') or file.endswith('.zip'):
                     continue
                 full_path = os.path.join(root, file)
                 rel_path = os.path.relpath(full_path, source_dir)
