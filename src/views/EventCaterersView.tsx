@@ -59,7 +59,7 @@ const CATERING_MENU_ITEMS: CateringMenuItem[] = [
     name: 'Nigerian Fried Rice & Chicken',
     category: 'rice',
     description: 'Seasoned grain stir-fried with sweet carrots, peas, liver and fragrant thyme, served with golden grilled chicken.',
-    image: getAssetUrl('assets/images/uploads/Fried-Rice-with-chicken-450x450.jpg'),
+    image: getAssetUrl('assets/images/uploads/Fried-Rice-450x450.jpg'),
     tag: 'Classic Feast',
   },
   {
