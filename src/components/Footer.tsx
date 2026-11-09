@@ -84,7 +84,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => handleNav('bakery')}
                   className="hover:text-[#d8ad53] transition-colors cursor-pointer"
                 >
-                  Bakery & Bread Rolls
+                  Bakery Pastries
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleNav('event-caterers')}
+                  className="hover:text-[#d8ad53] transition-colors cursor-pointer text-[#f2d58a] font-semibold"
+                >
+                  Event Caterers
                 </button>
               </li>
               <li>
@@ -92,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => handleNav('specials')}
                   className="hover:text-[#d8ad53] transition-colors cursor-pointer"
                 >
-                  Specials & Catering
+                  Specials &amp; Platters
                 </button>
               </li>
               <li>

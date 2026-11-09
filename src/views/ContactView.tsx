@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PageView } from '../types';
 import { RESTAURANT_INFO, createWhatsAppUrl } from '../data/menuData';
-import { Phone, MessageSquare, MapPin, Clock, Send, ArrowRight, ArrowUpRight, ShoppingBag, Utensils, Flame, Heart, Truck } from 'lucide-react';
+import { Phone, MessageSquare, MapPin, Clock, Send, ArrowRight, ArrowUpRight, ShoppingBag, Utensils, Flame, Heart, Truck, Calendar } from 'lucide-react';
 import { getAssetUrl } from '../utils/assetHelper';
 
 interface ContactViewProps {
@@ -247,6 +247,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate, onOpenCart
                   <option value="Order For Today">Order For Today</option>
                   <option value="Swallow & Soup Pairing Enquiry">Swallow & Soup Pairing Enquiry</option>
                   <option value="Bakery & Pastries Order">Bakery & Pastries Order</option>
+                  <option value="Wedding & Event Catering Quote">Wedding & Event Catering Quote</option>
                   <option value="Party Catering & Sharing Trays">Party Catering & Sharing Trays</option>
                   <option value="General Question">General Question</option>
                 </select>
@@ -376,6 +377,26 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate, onOpenCart
               </h4>
               <p className="text-[11px] text-[#b9b4a8] mt-1">
                 Rooted in authentic Nigerian culinary traditions right in Milton Keynes.
+              </p>
+            </button>
+
+            {/* Event Caterers */}
+            <button
+              onClick={() => {
+                onNavigate('event-caterers');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="p-4 bg-[#1b2017] hover:bg-[#232a1e] border border-white/5 hover:border-[#d8ad53]/60 rounded-xl text-left transition-all group cursor-pointer shadow-md"
+            >
+              <div className="w-9 h-9 rounded-lg bg-[#d8ad53]/15 text-[#f2d58a] flex items-center justify-center mb-3">
+                <Calendar className="w-4 h-4" />
+              </div>
+              <h4 className="font-serif font-bold text-sm text-[#f6f0e4] group-hover:text-[#f2d58a] flex items-center justify-between">
+                <span>Event Caterers</span>
+                <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              </h4>
+              <p className="text-[11px] text-[#b9b4a8] mt-1">
+                Bespoke wedding feasts, corporate events, private parties &amp; equipment hire.
               </p>
             </button>
 

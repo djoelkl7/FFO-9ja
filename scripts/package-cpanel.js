@@ -32,6 +32,17 @@ if (fs.existsSync(htaccessPublic) && !fs.existsSync(htaccessDist)) {
   console.log('✅ Copied .htaccess to dist/');
 }
 
+// 2b. Ensure /event-caterers/index.html directory and fallback exists for Hostinger/cPanel static hosting
+const caterersDir = path.join(distDir, 'event-caterers');
+if (!fs.existsSync(caterersDir)) {
+  fs.mkdirSync(caterersDir, { recursive: true });
+}
+const mainIndexDist = path.join(distDir, 'index.html');
+if (fs.existsSync(mainIndexDist)) {
+  fs.copyFileSync(mainIndexDist, path.join(caterersDir, 'index.html'));
+  console.log('✅ Created dist/event-caterers/index.html for Hostinger public_html');
+}
+
 // 3. Create CPANEL_README.txt inside dist
 const readmeContent = `================================================================================
 NAIJA POT KITCHEN & GRILL LTD — cPanel Deployment Package

@@ -26,12 +26,22 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const navLinks: { label: string; page: PageView }[] = [
-    { label: 'Home', page: 'home' },
-    { label: 'Our Story', page: 'story' },
-    { label: 'Full Menu', page: 'menu' },
-    { label: 'Bakery', page: 'bakery' },
-    { label: 'Our Specials', page: 'specials' },
-    { label: 'Contact', page: 'contact' },
+    { label: 'HOME', page: 'home' },
+    { label: 'ABOUT US', page: 'story' },
+    { label: 'ALL MENU', page: 'menu' },
+    { label: 'BAKERY', page: 'bakery' },
+    { label: 'EVENT CATERERS', page: 'event-caterers' },
+    { label: 'CONTACT', page: 'contact' },
+  ];
+
+  const mobileNavLinks: { label: string; page: PageView }[] = [
+    { label: 'HOME', page: 'home' },
+    { label: 'ABOUT US', page: 'story' },
+    { label: 'ALL MENU', page: 'menu' },
+    { label: 'BAKERY', page: 'bakery' },
+    { label: 'EVENT CATERERS', page: 'event-caterers' },
+    { label: 'OUR SPECIALS', page: 'specials' },
+    { label: 'CONTACT', page: 'contact' },
   ];
 
   return (
@@ -136,7 +146,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-[#0c0e0b] border-b border-[#d8ad53]/25 px-6 py-5 space-y-3 animate-rise">
-            {navLinks.map((link) => {
+            {mobileNavLinks.map((link) => {
               const isActive = currentPage === link.page;
               return (
                 <button

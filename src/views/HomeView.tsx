@@ -53,16 +53,16 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
-                onClick={() => onNavigate('specials')}
+                onClick={() => onNavigate('event-caterers')}
                 className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#45a866] hover:text-[#20c76a] border-b border-[#45a866]/50 pb-1 transition-all cursor-pointer"
               >
-                <span>Event catering</span>
+                <span>Event caterers</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          {/* GSAP Animated Event Catering 4:5 Slider with 3s Shake */}
+          {/* GSAP Animated Event Catering 4:5 Slider with Shape Pop-Out */}
           <div className="lg:col-span-5 flex justify-center w-full">
             <SquareFoodSlider onNavigate={onNavigate} />
           </div>
@@ -318,10 +318,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
                 <button
-                  onClick={() => onNavigate('menu')}
-                  className="border border-[#d8ad53]/60 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all inline-flex items-center gap-2 cursor-pointer"
+                  onClick={() => onNavigate('event-caterers')}
+                  className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
                 >
-                  <span>Explore Menu</span>
+                  <span>Event Caterers Page</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

@@ -64,4 +64,4 @@ export interface BakeryProduct {
   price?: string;
 }
 
-export type PageView = 'home' | 'story' | 'menu' | 'bakery' | 'specials' | 'contact';
+export type PageView = 'home' | 'story' | 'menu' | 'bakery' | 'specials' | 'contact' | 'event-caterers';

@@ -3,7 +3,6 @@ import { Dish, MenuCategoryId, CartItem, PageView } from '../types';
 import { DISHES, CATEGORIES, createWhatsAppUrl } from '../data/menuData';
 import { Search, ArrowUpRight, Plus, SlidersHorizontal, Check, ArrowRight, X } from 'lucide-react';
 import { getAssetUrl, handleImageError } from '../utils/assetHelper';
-import { CartingEventSlider } from '../components/CartingEventSlider';
 
 interface MenuViewProps {
   initialCategory?: MenuCategoryId;
@@ -19,6 +18,10 @@ const MENU_PRICE_OVERRIDES: Record<string, { price: string; numericPrice: number
   'chicken-suya-whole': { price: '£30.00', numericPrice: 30 },
   'peppered-turkey-wings': { price: '£8.00', numericPrice: 8 },
   'grilled-chicken-wings': { price: '£8.00', numericPrice: 8 },
+  'odogwu-platter': { price: '£95.00', numericPrice: 95 },
+  'fish-odogwu-platter': { price: '£95.00', numericPrice: 95 },
+  'tilapia-wings-prawns-platter': { price: '£40.00', numericPrice: 40 },
+  'bbq-peppered-chicken-leg': { price: '£10.00', numericPrice: 10 },
   'mixed-grill-platter': { price: '£120.00', numericPrice: 120 },
   'peppered-meat': { price: '£20.00', numericPrice: 20 },
   'jollof-rice-beef-chicken': { price: '£17.00', numericPrice: 17 },
@@ -253,19 +256,162 @@ export const MenuView: React.FC<MenuViewProps> = ({ initialCategory, onOpenSolid
                           <span>Book Event Catering On WHATSAPP</span>
                           <ArrowUpRight className="w-4 h-4" />
                         </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (onNavigate) onNavigate('event-caterers');
+                            else window.location.hash = 'event-caterers';
+                          }}
+                          className="inline-flex items-center gap-2 bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider px-6 py-3.5 rounded-lg shadow-md transition-all cursor-pointer"
+                        >
+                          <span>Full Event Caterers Page</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* 3-Second Auto-Rotating Image Slider */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs font-bold tracking-wider text-[#d8ad53] uppercase">
-                        CATERING SERVICES GALLERY (3s ROTATING SLIDER)
-                      </p>
-                      <span className="text-[11px] text-[#b9b4a8]">Hover to pause</span>
+                  {/* Catering Services Overview & Image Showcase (Replaces Slider) */}
+                  <div className="space-y-6 pt-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#d8ad53]/25 pb-3">
+                      <div>
+                        <p className="text-xs font-bold tracking-wider text-[#d8ad53] uppercase">
+                          CATERING SERVICES & EVENT SPECIALTIES
+                        </p>
+                        <p className="text-xs text-[#b9b4a8]">
+                          Explore our full range of tailored catering services with authentic event photography
+                        </p>
+                      </div>
+                      <span className="text-xs text-[#45a866] font-semibold">5 Event Services</span>
                     </div>
-                    <CartingEventSlider showInfoCard={false} />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {[
+                        {
+                          id: 'event-weddings',
+                          title: 'Wedding & Reception Feasts',
+                          tag: 'Weddings',
+                          image: getAssetUrl('assets/images/uploads/Carting-Event1.JPG'),
+                          desc: 'Bespoke Nigerian and African fusion banquets, lavish chafing dish buffet setups, and silver service for unforgettable wedding celebrations.',
+                          features: ['Custom 3-Course Wedding Banquets', 'Piping Hot Chafing Dish Buffet', 'Suya Carvery & Appetiser Canapes'],
+                          waMsg: 'Hello Naija Pot, I would like to enquire about Wedding Event Catering.',
+                        },
+                        {
+                          id: 'event-corporate',
+                          title: 'Corporate & Executive Events',
+                          tag: 'Corporate',
+                          image: getAssetUrl('assets/images/uploads/Carting-Event2.JPG'),
+                          desc: 'Professional, punctual catering for corporate conferences, company galas, client summits, and brand activation lunches in Milton Keynes & nationwide.',
+                          features: ['Executive Warm Buffet Setups', 'Dietary & Halal Compliant Options', 'Uniformed Service Staff'],
+                          waMsg: 'Hello Naija Pot, I would like to enquire about Corporate Event Catering.',
+                        },
+                        {
+                          id: 'event-private',
+                          title: 'Private Celebrations & Banquets',
+                          tag: 'Private Parties',
+                          image: getAssetUrl('assets/images/uploads/Carting-Event3.JPG'),
+                          desc: 'Milestone birthdays, naming ceremonies, anniversaries, and family gatherings served with heartwarming authentic flavors and generosity.',
+                          features: ['Authentic Party Jollof & Fried Rice', 'Rich Assorted Meat & Pepper Soups', 'Celebration Sharing Platters'],
+                          waMsg: 'Hello Naija Pot, I would like to enquire about Private Party Catering.',
+                        },
+                        {
+                          id: 'event-outdoor',
+                          title: 'Live BBQ, Paella, Spit Roast & Finger Food',
+                          tag: 'Live Cooking',
+                          image: getAssetUrl('assets/images/uploads/Carting-Event4.JPG'),
+                          desc: 'Interactive live cooking with charcoal grills, spicy chicken wings, butterfly king prawns, seafood paella, and Nigerian small chops finger foods.',
+                          features: ['Live Smoky Charcoal Grill', 'Paella & Spit Roast Carvery', 'Hot Puff Puff & Meat Pie Canapes'],
+                          waMsg: 'Hello Naija Pot, I would like to enquire about Live BBQ and Spit Roast Catering.',
+                        },
+                        {
+                          id: 'event-bars',
+                          title: 'Mobile Bars & Equipment Hire',
+                          tag: 'Equipment & Bar',
+                          image: getAssetUrl('assets/images/uploads/Carting-Event5.JPG'),
+                          desc: 'Full event infrastructure including mobile bar setups, premium chafing dishes, chafing fuel, warming trays, glassware, cutlery, and staffing.',
+                          features: ['Mobile Bar & Signature Drinks', 'Commercial Chafing Dish Hire', 'Full Event Setup & Teardown'],
+                          waMsg: 'Hello Naija Pot, I would like to enquire about Mobile Bars and Equipment Hire.',
+                        },
+                      ].map((item) => (
+                        <div
+                          key={item.id}
+                          className="bg-[#141711] border border-[#d8ad53]/30 rounded-2xl overflow-hidden shadow-xl flex flex-col group hover:border-[#d8ad53] transition-all duration-300"
+                        >
+                          <div
+                            className="relative h-52 sm:h-56 overflow-hidden bg-black cursor-zoom-in"
+                            onClick={() =>
+                              setPreviewDish({
+                                id: item.id,
+                                name: item.title,
+                                category: 'carting-event',
+                                price: 'Custom Quote',
+                                numericPrice: 0,
+                                description: item.desc,
+                                image: item.image,
+                                tag: item.tag,
+                              })
+                            }
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`View full image of ${item.title}`}
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              onError={handleImageError}
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                            <span className="absolute top-3 left-3 bg-[#19834b] text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded shadow">
+                              {item.tag}
+                            </span>
+                            <span className="absolute bottom-3 left-3 right-3 text-xs font-serif font-bold text-[#f2d58a]">
+                              {item.title}
+                            </span>
+                          </div>
+
+                          <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                            <div className="space-y-3">
+                              <p className="text-xs text-[#b9b4a8] leading-relaxed">
+                                {item.desc}
+                              </p>
+                              <ul className="space-y-1.5 pt-1">
+                                {item.features.map((feat, fIdx) => (
+                                  <li key={fIdx} className="flex items-center gap-2 text-[11px] text-[#e1ddd3]">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#d8ad53] shrink-0" />
+                                    <span>{feat}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                              <a
+                                href={createWhatsAppUrl(item.waMsg)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-2.5 px-3 rounded-lg shadow transition-colors"
+                              >
+                                <span>Enquire</span>
+                                <ArrowUpRight className="w-3.5 h-3.5" />
+                              </a>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (onNavigate) onNavigate('event-caterers');
+                                  else window.location.hash = 'event-caterers';
+                                }}
+                                className="inline-flex items-center justify-center gap-1 bg-[#1a1f16] hover:bg-[#d8ad53] hover:text-[#090a08] text-[#d8ad53] border border-[#d8ad53]/40 font-bold text-xs uppercase tracking-wider py-2.5 px-3 rounded-lg transition-colors cursor-pointer"
+                              >
+                                <span>Details</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               );

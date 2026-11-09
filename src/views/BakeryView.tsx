@@ -83,7 +83,17 @@ export const BakeryView: React.FC<BakeryViewProps> = ({
               >
                 <span>View full menu</span><ArrowRight className="w-3.5 h-3.5" />
               </button>
-              <a href="#bakery-order" className="border border-[#f2d58a]/75 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all">
+              <button
+                onClick={() => {
+                  if (onNavigate) onNavigate('event-caterers');
+                  else window.location.hash = 'event-caterers';
+                }}
+                className="border border-[#d8ad53]/75 hover:bg-[#d8ad53]/15 text-[#f6f0e4] font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all inline-flex items-center gap-2"
+              >
+                <span>Event Caterers</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#d8ad53]" />
+              </button>
+              <a href="#bakery-order" className="border border-white/20 hover:border-white/50 text-[#ded8cb] font-bold text-xs uppercase tracking-wider px-6 py-3.5 transition-all">
                 How to order
               </a>
             </div>

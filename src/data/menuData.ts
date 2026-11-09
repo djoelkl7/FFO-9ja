@@ -94,6 +94,16 @@ export const DISHES: Dish[] = [
     tag: 'VIP Sharing',
   },
   {
+    id: 'fish-odogwu-platter',
+    name: 'Fish Odogwu Platter',
+    category: 'grills-corner',
+    price: '£95.00',
+    numericPrice: 95.0,
+    description: '3 Whole Grilled Tilapias, Corn, Suya Chicken Wings, Butterfly King Prawns, Fried Yam (Dundun), Fried Plantain (Dodo), Fried Plantain on the Cob & Jollof Rice.',
+    image: img('Fish-Odogwu-Platter .JPG'),
+    tag: 'Seafood VIP Feast',
+  },
+  {
     id: 'tilapia-wings-prawns-platter',
     name: '2 Whole Grilled Tilapia & Seafood Platter',
     category: 'grills-corner',

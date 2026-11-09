@@ -11,6 +11,7 @@ import { BakeryView } from './views/BakeryView';
 import { SpecialsView } from './views/SpecialsView';
 import { StoryView } from './views/StoryView';
 import { ContactView } from './views/ContactView';
+import { EventCaterersView } from './views/EventCaterersView';
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
@@ -42,9 +43,21 @@ export const App: React.FC = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    const handleHash = () => {
+    const handleRoute = () => {
+      const pathname = window.location.pathname.toLowerCase().replace(/^\/|\/$/g, '');
       const rawHash = window.location.hash.replace('#', '').toLowerCase();
-      if (rawHash === 'bakery' || rawHash === 'bakery-page' || rawHash === 'bakery-hub') {
+
+      if (
+        pathname === 'event-caterers' ||
+        pathname.endsWith('/event-caterers') ||
+        rawHash === 'event-caterers' ||
+        rawHash === 'catering' ||
+        rawHash === 'event-catering'
+      ) {
+        setCurrentPage('event-caterers');
+        return;
+      }
+      if (rawHash === 'bakery' || rawHash === 'bakery-page' || rawHash === 'bakery-hub' || pathname === 'bakery') {
         setCurrentPage('bakery');
         return;
       }
@@ -53,18 +66,23 @@ export const App: React.FC = () => {
         setMenuInitialCategory('bakery');
         return;
       }
-      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact'].includes(rawHash)) {
+      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact', 'event-caterers'].includes(rawHash)) {
         if (rawHash === 'menu') setMenuInitialCategory('all');
         setCurrentPage(rawHash as PageView);
+        return;
+      }
+      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact', 'event-caterers'].includes(pathname)) {
+        if (pathname === 'menu') setMenuInitialCategory('all');
+        setCurrentPage(pathname as PageView);
       }
     };
 
-    handleHash();
-    window.addEventListener('popstate', handleHash);
-    window.addEventListener('hashchange', handleHash);
+    handleRoute();
+    window.addEventListener('popstate', handleRoute);
+    window.addEventListener('hashchange', handleRoute);
     return () => {
-      window.removeEventListener('popstate', handleHash);
-      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('popstate', handleRoute);
+      window.removeEventListener('hashchange', handleRoute);
     };
   }, []);
 
@@ -145,6 +163,7 @@ export const App: React.FC = () => {
           />
         )}
         {currentPage === 'specials' && <SpecialsView onNavigate={navigateTo} onAddToCart={handleAddToCart} />}
+        {currentPage === 'event-caterers' && <EventCaterersView onNavigate={navigateTo} />}
         {currentPage === 'contact' && <ContactView onNavigate={navigateTo} onOpenCart={() => setIsCartOpen(true)} />}
       </main>
       <Footer onNavigate={navigateTo} />

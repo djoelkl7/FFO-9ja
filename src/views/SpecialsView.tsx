@@ -389,17 +389,25 @@ export const SpecialsView: React.FC<SpecialsViewProps> = ({ onNavigate, onAddToC
                   </p>
                 </div>
               </div>
-              <div className="p-6 pt-0">
+              <div className="p-6 pt-0 flex flex-wrap items-center gap-3">
                 <a
                   href={createWhatsAppUrl('Hello Naija Pot, I would like to book Event Catering for an upcoming event.')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg transition-all shadow flex items-center justify-center gap-2"
+                  className="flex-1 min-w-[180px] bg-[#20c76a] hover:bg-[#2fe27c] text-[#062b17] font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg transition-all shadow flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                  <span>Book Event Catering On WHATSAPP</span>
+                  <span>Book on WhatsApp</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('event-caterers')}
+                  className="bg-[#d8ad53] hover:bg-[#e4bb61] text-[#090a08] font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-lg transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span>Catering Page</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
 

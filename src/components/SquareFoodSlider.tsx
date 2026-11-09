@@ -141,20 +141,15 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
     const textEl = textContentRef.current;
     const progressEl = progressBarRef.current;
 
-    // Entrance animation with punchy elastic shake feedback
+    // Entrance animation with punchy shape pop-out feedback
     const enterTl = gsap.timeline();
     enterTl
       .fromTo(
         slideEl,
-        { scale: 1.05, opacity: 0.6 },
-        { scale: 1, opacity: 1, duration: 0.45, ease: 'power2.out' }
+        { scale: 0.88, opacity: 0.6 },
+        { scale: 1.05, opacity: 1, duration: 0.38, ease: 'back.out(1.8)' }
       )
-      .fromTo(
-        slideEl,
-        { x: -5, rotation: -0.8 },
-        { x: 0, rotation: 0, duration: 0.4, ease: 'elastic.out(1.2, 0.3)' },
-        0.05
-      );
+      .to(slideEl, { scale: 1, duration: 0.22, ease: 'power2.out' });
 
     if (textEl) {
       gsap.fromTo(
@@ -214,7 +209,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
       onMouseLeave={handleMouseLeave}
       style={{ aspectRatio: '4 / 5' }}
       className="relative w-full max-w-[420px] mx-auto aspect-[4/5] rounded-3xl overflow-hidden border-2 border-[#d8ad53]/45 bg-[#0f120c] shadow-[0_24px_60px_rgba(0,0,0,0.85)] group select-none transition-all duration-300 hover:border-[#d8ad53]"
-      aria-label="Event Catering 3-Second Showcase Slider"
+      aria-label="Event Catering Shape Pop-Out Showcase Slider"
       role="region"
     >
       {/* 3-Second Auto-change Progress Bar */}
@@ -225,11 +220,11 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
         />
       </div>
 
-      {/* Main Slide Image with 3-Second Shake Animation */}
+      {/* Main Slide Image with 3-Second Shape Pop-Out Animation */}
       <div className="relative w-full h-full overflow-hidden bg-black">
         <div
           ref={activeSlideRef}
-          className="w-full h-full relative overflow-hidden shake-3s-animation"
+          className="w-full h-full relative overflow-hidden shape-pop-out-animation"
         >
           <img
             src={currentSlide.image}
@@ -350,7 +345,7 @@ export const SquareFoodSlider: React.FC<SquareFoodSliderProps> = ({ onNavigate }
 
       {/* Gold Signature Corner Stamp */}
       <span className="absolute bottom-0 right-0 bg-[#d8ad53] text-[#090a08] text-[9px] font-bold tracking-widest uppercase px-3 py-1 z-20 shadow-md">
-        RATIO 4:5 · 3s SHAKE
+        RATIO 4:5 · SHAPE POP-OUT
       </span>
     </div>
   );
