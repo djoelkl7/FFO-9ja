@@ -36,10 +36,81 @@ export const App: React.FC = () => {
     }
   }, [cart]);
 
-  // Scroll to the top after the selected page has rendered, so navigation from
-  // footer links and other CTAs always lands at the page's main navigation area.
+  // Scroll to the top and sync page-level SEO metadata (title, description, canonical, og:url)
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const SEO_META: Record<PageView, { title: string; description: string; path: string }> = {
+      home: {
+        title: 'Naija Pot Kitchen & Grill Ltd | Nigerian Food in Milton Keynes',
+        description:
+          'Authentic Nigerian cuisine, soups, party jollof, charcoal grills, bakery treats and event catering in Milton Keynes. Order fresh today on WhatsApp.',
+        path: '/',
+      },
+      story: {
+        title: 'Our Story & Heritage | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Discover the story behind Naija Pot Kitchen & Grill Ltd — bringing authentic Nigerian home cooking and warm hospitality to Bradville, Milton Keynes.',
+        path: '/story/',
+      },
+      menu: {
+        title: 'Full Menu | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Explore our full Nigerian menu: The Grill Hub, party jollof rice, traditional soups & swallows, platters, small chops, bakery and drinks.',
+        path: '/menu/',
+      },
+      bakery: {
+        title: 'Artisanal Nigerian Bakery | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Freshly baked Nigerian meat pies and golden puff puff made daily for collection and pre-order in Milton Keynes.',
+        path: '/bakery/',
+      },
+      specials: {
+        title: 'Our Specials & Food Truck | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Discover our signature platters, weekend specials, and mobile Nigerian events food truck serving Milton Keynes and UK events.',
+        path: '/specials/',
+      },
+      'event-caterers': {
+        title: 'Event Caterers & Banquet Services | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Professional Nigerian event catering for weddings, corporate events, private parties and funerals in Milton Keynes and across the UK.',
+        path: '/event-caterers/',
+      },
+      contact: {
+        title: 'Contact & Orders | Naija Pot Kitchen & Grill Ltd',
+        description:
+          'Visit 22 Eston Court, Bradville, Milton Keynes or order fresh Nigerian cuisine directly via WhatsApp. Open daily 9am – 11pm.',
+        path: '/contact/',
+      },
+    };
+
+    const meta = SEO_META[currentPage] || SEO_META.home;
+    document.title = meta.title;
+
+    const origin =
+      typeof window !== 'undefined' && window.location.origin.startsWith('http')
+        ? window.location.origin
+        : 'https://naijapotkitchengrill.co.uk';
+    const isGhPages = typeof window !== 'undefined' && window.location.pathname.startsWith('/FFO-9ja');
+    const canonicalUrl = isGhPages
+      ? `https://naijapotkitchengrill.co.uk${meta.path}`
+      : `${origin}${meta.path}`;
+
+    const descEl = document.querySelector('meta[name="description"]');
+    if (descEl) descEl.setAttribute('content', meta.description);
+
+    const ogDescEl = document.querySelector('meta[property="og:description"]');
+    if (ogDescEl) ogDescEl.setAttribute('content', meta.description);
+
+    const ogTitleEl = document.querySelector('meta[property="og:title"]');
+    if (ogTitleEl) ogTitleEl.setAttribute('content', meta.title);
+
+    const canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (canonicalEl) canonicalEl.setAttribute('href', canonicalUrl);
+
+    const ogUrlEl = document.querySelector('meta[property="og:url"]');
+    if (ogUrlEl) ogUrlEl.setAttribute('href', canonicalUrl);
   }, [currentPage]);
 
   useEffect(() => {

@@ -30,11 +30,21 @@ export function getAssetUrl(path: string): string {
   // Strip leading ./ or /
   const cleanPath = path.replace(/^(\.\/|\/)+/, '');
 
-  // Vite's configured base path (e.g. '/FFO-9ja/' on GitHub Pages, '/' on local dev)
+  // Vite's configured base path (e.g. '/FFO-9ja/' on GitHub Pages, './' on cPanel, '/' on dev)
   const metaEnv = (import.meta as unknown as { env?: { BASE_URL?: string } }).env;
   const base = metaEnv?.BASE_URL || '/';
-  const cleanBase = base.endsWith('/') ? base : `${base}/`;
 
+  // When built with relative './' base, ensure subroute paths (/event-caterers/, /menu/, etc.) resolve to parent root
+  if (base === './' && typeof window !== 'undefined') {
+    const pathname = window.location.pathname.toLowerCase();
+    const isSubroute = /^.*\/(event-caterers|bakery|menu|specials|story|contact)(\/index\.html|\/)?$/.test(pathname);
+    if (isSubroute) {
+      return `../${cleanPath}`;
+    }
+    return `./${cleanPath}`;
+  }
+
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
   return `${cleanBase}${cleanPath}`;
 }
 

@@ -8,6 +8,8 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const publicDir = path.join(rootDir, 'public');
 
+const SITE_ORIGIN = 'https://naijapotkitchengrill.co.uk';
+
 console.log('\n====================================================');
 console.log('🔍 NAIJA POT — Verifying Production Build in dist/');
 console.log('====================================================');
@@ -31,70 +33,133 @@ if (!fs.existsSync(nojekyllDist)) {
 // 3. Ensure 404.html exists in dist for GitHub Pages SPA routing
 const fourOhFourPublic = path.join(publicDir, '404.html');
 const fourOhFourDist = path.join(distDir, '404.html');
-if (!fs.existsSync(fourOhFourDist)) {
-  if (fs.existsSync(fourOhFourPublic)) {
-    fs.copyFileSync(fourOhFourPublic, fourOhFourDist);
-    console.log('✅ Copied 404.html to dist/ (GitHub Pages SPA client router)');
-  } else {
-    // Fallback script if public/404.html is missing
-    const fallback404 = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Naija Pot Kitchen & Grill Ltd</title>
-  <script>
-    (function() {
-      var pathname = window.location.pathname;
-      var repoPrefix = '/FFO-9ja';
-      var subpath = pathname.startsWith(repoPrefix) ? pathname.slice(repoPrefix.length) : pathname;
-      subpath = subpath.replace(/^\\/+|\\/+$/g, '');
-      var base = pathname.startsWith(repoPrefix) ? repoPrefix + '/' : '/';
-      var target = base + (subpath ? '#' + subpath : '') + window.location.search + window.location.hash;
-      window.location.replace(target);
-    })();
-  </script>
-</head>
-<body style="background:#090a08;color:#f6f0e4;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
-  <p>Loading Naija Pot Kitchen &amp; Grill...</p>
-</body>
-</html>`;
-    fs.writeFileSync(fourOhFourDist, fallback404, 'utf-8');
-    console.log('✅ Generated dist/404.html fallback');
+if (fs.existsSync(fourOhFourPublic)) {
+  fs.copyFileSync(fourOhFourPublic, fourOhFourDist);
+  console.log('✅ Synced dist/404.html');
+}
+
+// 4. Ensure .htaccess, sitemap.xml, and robots.txt match corrected public/ files
+for (const staticFile of ['.htaccess', 'sitemap.xml', 'robots.txt']) {
+  const srcPath = path.join(publicDir, staticFile);
+  const destPath = path.join(distDir, staticFile);
+  if (fs.existsSync(srcPath)) {
+    fs.copyFileSync(srcPath, destPath);
+    console.log(`✅ Synced dist/${staticFile}`);
   }
-} else {
-  console.log('✅ dist/404.html present');
 }
 
-// 4. Ensure .htaccess is in dist for Apache/cPanel/Hostinger
-const htaccessPublic = path.join(publicDir, '.htaccess');
-const htaccessDist = path.join(distDir, '.htaccess');
-if (fs.existsSync(htaccessPublic) && !fs.existsSync(htaccessDist)) {
-  fs.copyFileSync(htaccessPublic, htaccessDist);
-  console.log('✅ Copied .htaccess to dist/');
-}
-
-// 5. Ensure static route directories with index.html exist so direct URLs succeed immediately (200 OK)
+// 5. Generate route-specific static HTML entries in dist/ with proper relative paths & canonical/SEO tags
 const mainIndexDist = path.join(distDir, 'index.html');
 if (fs.existsSync(mainIndexDist)) {
-  const routesToPreRender = ['event-caterers', 'bakery', 'menu', 'specials', 'story', 'contact'];
-  for (const route of routesToPreRender) {
+  const baseHtml = fs.readFileSync(mainIndexDist, 'utf-8');
+  const routeMeta = {
+    'event-caterers': {
+      title: 'Event Caterers & Banquet Services | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Professional Nigerian event catering for weddings, corporate events, private parties and funerals in Milton Keynes and across the UK.',
+    },
+    bakery: {
+      title: 'Artisanal Nigerian Bakery | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Freshly baked Nigerian meat pies and golden puff puff made daily for collection and pre-order in Milton Keynes.',
+    },
+    menu: {
+      title: 'Full Menu | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Explore our full Nigerian menu: The Grill Hub, party jollof rice, traditional soups & swallows, platters, small chops, bakery and drinks.',
+    },
+    specials: {
+      title: 'Our Specials & Food Truck | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Discover our signature platters, weekend specials, and mobile Nigerian events food truck serving Milton Keynes and UK events.',
+    },
+    story: {
+      title: 'Our Story & Heritage | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Discover the story behind Naija Pot Kitchen & Grill Ltd — bringing authentic Nigerian home cooking and warm hospitality to Bradville, Milton Keynes.',
+    },
+    contact: {
+      title: 'Contact & Orders | Naija Pot Kitchen & Grill Ltd',
+      description:
+        'Visit 22 Eston Court, Bradville, Milton Keynes or order fresh Nigerian cuisine directly via WhatsApp. Open daily 9am – 11pm.',
+    },
+  };
+
+  for (const [route, meta] of Object.entries(routeMeta)) {
     const routeDir = path.join(distDir, route);
     if (!fs.existsSync(routeDir)) {
       fs.mkdirSync(routeDir, { recursive: true });
     }
-    const routeIndex = path.join(routeDir, 'index.html');
-    fs.copyFileSync(mainIndexDist, routeIndex);
+    const canonicalUrl = `${SITE_ORIGIN}/${route}/`;
+    let routeHtml = baseHtml
+      // Adjust relative ./ asset/icon paths when served from /<route>/
+      .replace(/(href|src)="\.\//g, '$1="../')
+      // Set route-specific canonical URL and OpenGraph URL
+      .replace(
+        /<link rel="canonical" href="[^"]*">/,
+        `<link rel="canonical" href="${canonicalUrl}">`
+      )
+      .replace(
+        /<meta property="og:url" content="[^"]*">/,
+        `<meta property="og:url" content="${canonicalUrl}">`
+      )
+      .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`)
+      .replace(
+        /<meta property="og:title" content="[^"]*">/,
+        `<meta property="og:title" content="${meta.title}">`
+      )
+      .replace(
+        /<meta name="twitter:title" content="[^"]*">/,
+        `<meta name="twitter:title" content="${meta.title}">`
+      )
+      .replace(
+        /<meta name="description" content="[^"]*">/,
+        `<meta name="description" content="${meta.description}">`
+      )
+      .replace(
+        /<meta property="og:description" content="[^"]*">/,
+        `<meta property="og:description" content="${meta.description}">`
+      )
+      .replace(
+        /<meta name="twitter:description" content="[^"]*">/,
+        `<meta name="twitter:description" content="${meta.description}">`
+      );
+
+    fs.writeFileSync(path.join(routeDir, 'index.html'), routeHtml, 'utf-8');
   }
-  console.log('✅ Pre-generated route entries in dist/ (event-caterers, bakery, menu, specials, story, contact)');
+  console.log('✅ Pre-generated route entries in dist/ with route-specific SEO & relative paths');
 }
 
-// 6. Verify core assets exist in dist/
+// 6. Verify core assets exist and ZERO references to yourdomain.com remain anywhere in dist/
 const assetsDir = path.join(distDir, 'assets');
 if (fs.existsSync(assetsDir)) {
   const assetCount = fs.readdirSync(assetsDir).length;
   console.log(`✅ dist/assets verified with ${assetCount} compiled bundles and resources.`);
 }
 
+const textExts = new Set(['.html', '.js', '.css', '.xml', '.txt', '.json', '.htaccess']);
+const leftovers = [];
+function scanForPlaceholder(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      scanForPlaceholder(fullPath);
+    } else if (textExts.has(path.extname(entry.name)) || entry.name === '.htaccess') {
+      const text = fs.readFileSync(fullPath, 'utf-8');
+      if (text.includes('yourdomain.com')) {
+        leftovers.push(path.relative(distDir, fullPath));
+      }
+    }
+  }
+}
+scanForPlaceholder(distDir);
+
+if (leftovers.length > 0) {
+  console.error(`❌ ERROR: Found remaining 'yourdomain.com' references in dist/: ${leftovers.join(', ')}`);
+  process.exit(1);
+}
+console.log('✅ Verified ZERO references to yourdomain.com anywhere in dist/');
+
 console.log('====================================================');
-console.log('🎉 GitHub Pages & Production dist/ build ready for deployment!');
+console.log('🎉 Production dist/ build verified & ready for deployment!');
 console.log('====================================================\n');
