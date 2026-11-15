@@ -143,7 +143,7 @@ const CATERING_MENU_ITEMS: CateringMenuItem[] = [
     name: 'Whole Grilled Tilapia & Croaker',
     category: 'grills',
     description: 'Whole seasoned fish slow-grilled to flaky perfection, served with signature chilli dipping sauce and fried yam.',
-    image: getAssetUrl('assets/images/uploads/Grilled-fish .JPG'),
+    image: getAssetUrl('assets/aistudio/Grilled-fish__6fe2a762.JPG'),
     tag: 'Seafood Grill',
   },
   {

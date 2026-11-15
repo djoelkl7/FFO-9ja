@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { SolidDishModal } from './components/SolidDishModal';
 import { OrderCartModal } from './components/OrderCartModal';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { HomeView } from './views/HomeView';
 import { MenuView } from './views/MenuView';
 import { BakeryView } from './views/BakeryView';
@@ -216,26 +217,28 @@ export const App: React.FC = () => {
         onOpenCart={() => setIsCartOpen(true)}
       />
       <main className="flex-1">
-        {currentPage === 'home' && <HomeView onNavigate={navigateTo} />}
-        {currentPage === 'story' && <StoryView onNavigate={navigateTo} />}
-        {currentPage === 'menu' && (
-          <MenuView
-            initialCategory={menuInitialCategory}
-            onOpenSolidModal={setSolidModalDish}
-            onAddToCart={handleAddToCart}
-            onNavigate={navigateTo}
-          />
-        )}
-        {currentPage === 'bakery' && (
-          <BakeryView
-            onAddToCart={handleAddToCart}
-            onNavigateToMenuCategory={navigateToMenuCategory}
-            onNavigate={navigateTo}
-          />
-        )}
-        {currentPage === 'specials' && <SpecialsView onNavigate={navigateTo} onAddToCart={handleAddToCart} />}
-        {currentPage === 'event-caterers' && <EventCaterersView onNavigate={navigateTo} />}
-        {currentPage === 'contact' && <ContactView onNavigate={navigateTo} onOpenCart={() => setIsCartOpen(true)} />}
+        <ErrorBoundary>
+          {currentPage === 'home' && <HomeView onNavigate={navigateTo} />}
+          {currentPage === 'story' && <StoryView onNavigate={navigateTo} />}
+          {currentPage === 'menu' && (
+            <MenuView
+              initialCategory={menuInitialCategory}
+              onOpenSolidModal={setSolidModalDish}
+              onAddToCart={handleAddToCart}
+              onNavigate={navigateTo}
+            />
+          )}
+          {currentPage === 'bakery' && (
+            <BakeryView
+              onAddToCart={handleAddToCart}
+              onNavigateToMenuCategory={navigateToMenuCategory}
+              onNavigate={navigateTo}
+            />
+          )}
+          {currentPage === 'specials' && <SpecialsView onNavigate={navigateTo} onAddToCart={handleAddToCart} />}
+          {currentPage === 'event-caterers' && <EventCaterersView onNavigate={navigateTo} />}
+          {currentPage === 'contact' && <ContactView onNavigate={navigateTo} onOpenCart={() => setIsCartOpen(true)} />}
+        </ErrorBoundary>
       </main>
       <Footer onNavigate={navigateTo} />
       <FloatingWhatsApp />
