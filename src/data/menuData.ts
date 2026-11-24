@@ -694,6 +694,26 @@ export const DISHES: Dish[] = [
     image: img('Stew-soup-with fish-or-meat.JPG'),
     tag: 'Soup Only',
   },
+  {
+    id: 'okoro-assorted-prawns-soup',
+    name: 'Okoro Assorted with Prawns Soup',
+    category: 'soup-dishes',
+    price: '£20.00',
+    numericPrice: 20.0,
+    description: 'A delicious traditional Nigerian Okoro soup, richly prepared with assorted meat and succulent prawns, blended with authentic Nigerian spices for a rich, delicious and satisfying taste.',
+    image: getAssetUrl('assets/aistudio/Okoro-soup1_e99ab5ac.JPG'),
+    tag: 'Soup Only',
+  },
+  {
+    id: 'banga-assorted-soup',
+    name: 'Banga Assorted Soup',
+    category: 'soup-dishes',
+    price: '£20.00',
+    numericPrice: 20.0,
+    description: 'A delicious traditional Nigerian Banga soup, richly prepared with assorted meat and authentic spices. Enjoy its unique palm-fruit flavour, rich aroma and authentic Nigerian taste.',
+    image: getAssetUrl('assets/aistudio/Banga_Assorted_Soup__a2693a7a.JPG'),
+    tag: 'Soup Only',
+  },
 
   // 13 Carting Event
   {

@@ -32,7 +32,7 @@ export const ContactView: React.FC<ContactViewProps> = ({ onNavigate, onOpenCart
     <div className="space-y-0">
       {/* Page Hero */}
       <section
-        className="relative h-96 sm:h-[440px] bg-cover bg-center flex items-center"
+        className="relative h-96 sm:h-[440px] bg-[#090a08] bg-cover bg-center flex items-center"
         style={{
           backgroundImage: `url(${getAssetUrl('assets/images/uploads/Small-chops-platterJ-450x450.jpg')})`,
         }}

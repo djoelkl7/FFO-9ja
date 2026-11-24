@@ -14,9 +14,69 @@ import { StoryView } from './views/StoryView';
 import { ContactView } from './views/ContactView';
 import { EventCaterersView } from './views/EventCaterersView';
 
+const VALID_PAGES: PageView[] = [
+  'home',
+  'story',
+  'menu',
+  'bakery',
+  'specials',
+  'contact',
+  'event-caterers',
+];
+
+function resolveRouteFromLocation(): { page: PageView; menuCategory?: MenuCategoryId } {
+  if (typeof window === 'undefined') {
+    return { page: 'home' };
+  }
+
+  const pathname = window.location.pathname.toLowerCase().replace(/^\/|\/$/g, '');
+  const lastSegment = pathname.split('/').filter(Boolean).pop() || '';
+  const rawHash = window.location.hash.replace('#', '').toLowerCase();
+
+  if (
+    lastSegment === 'event-caterers' ||
+    rawHash === 'event-caterers' ||
+    rawHash === 'catering' ||
+    rawHash === 'event-catering'
+  ) {
+    return { page: 'event-caterers' };
+  }
+  if (
+    rawHash === 'bakery' ||
+    rawHash === 'bakery-page' ||
+    rawHash === 'bakery-hub' ||
+    lastSegment === 'bakery'
+  ) {
+    return { page: 'bakery' };
+  }
+  if (rawHash === 'menu-bakery') {
+    return { page: 'menu', menuCategory: 'bakery' };
+  }
+  if (rawHash.startsWith('menu-')) {
+    return { page: 'menu', menuCategory: rawHash.replace('menu-', '') as MenuCategoryId };
+  }
+  if (VALID_PAGES.includes(rawHash as PageView)) {
+    return {
+      page: rawHash as PageView,
+      menuCategory: rawHash === 'menu' ? 'all' : undefined,
+    };
+  }
+  if (VALID_PAGES.includes(lastSegment as PageView)) {
+    return {
+      page: lastSegment as PageView,
+      menuCategory: lastSegment === 'menu' ? 'all' : undefined,
+    };
+  }
+
+  return { page: 'home' };
+}
+
 export const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<PageView>('home');
-  const [menuInitialCategory, setMenuInitialCategory] = useState<MenuCategoryId | undefined>(undefined);
+  const [initialRoute] = useState(() => resolveRouteFromLocation());
+  const [currentPage, setCurrentPage] = useState<PageView>(initialRoute.page);
+  const [menuInitialCategory, setMenuInitialCategory] = useState<MenuCategoryId | undefined>(
+    initialRoute.menuCategory
+  );
   const [solidModalDish, setSolidModalDish] = useState<Dish | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -39,7 +99,7 @@ export const App: React.FC = () => {
 
   // Scroll to the top and sync page-level SEO metadata (title, description, canonical, og:url)
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
 
     const SEO_META: Record<PageView, { title: string; description: string; path: string }> = {
       home: {
@@ -116,40 +176,13 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const handleRoute = () => {
-      const pathname = window.location.pathname.toLowerCase().replace(/^\/|\/$/g, '');
-      const rawHash = window.location.hash.replace('#', '').toLowerCase();
-
-      if (
-        pathname === 'event-caterers' ||
-        pathname.endsWith('/event-caterers') ||
-        rawHash === 'event-caterers' ||
-        rawHash === 'catering' ||
-        rawHash === 'event-catering'
-      ) {
-        setCurrentPage('event-caterers');
-        return;
+      const resolved = resolveRouteFromLocation();
+      if (resolved.menuCategory !== undefined) {
+        setMenuInitialCategory(resolved.menuCategory);
       }
-      if (rawHash === 'bakery' || rawHash === 'bakery-page' || rawHash === 'bakery-hub' || pathname === 'bakery') {
-        setCurrentPage('bakery');
-        return;
-      }
-      if (rawHash === 'menu-bakery') {
-        setCurrentPage('menu');
-        setMenuInitialCategory('bakery');
-        return;
-      }
-      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact', 'event-caterers'].includes(rawHash)) {
-        if (rawHash === 'menu') setMenuInitialCategory('all');
-        setCurrentPage(rawHash as PageView);
-        return;
-      }
-      if (['home', 'story', 'menu', 'bakery', 'specials', 'contact', 'event-caterers'].includes(pathname)) {
-        if (pathname === 'menu') setMenuInitialCategory('all');
-        setCurrentPage(pathname as PageView);
-      }
+      setCurrentPage(resolved.page);
     };
 
-    handleRoute();
     window.addEventListener('popstate', handleRoute);
     window.addEventListener('hashchange', handleRoute);
     return () => {
@@ -160,6 +193,9 @@ export const App: React.FC = () => {
 
   const navigateTo = (page: PageView) => {
     if (page === 'menu') setMenuInitialCategory('all');
+    if (page === currentPage) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
     setCurrentPage(page);
     window.location.hash = page;
   };

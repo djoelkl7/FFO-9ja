@@ -22,7 +22,11 @@ export const Header: React.FC<HeaderProps> = ({
   const handleNav = (page: PageView) => {
     onNavigate(page);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: page === currentPage ? 'smooth' : ('instant' as ScrollBehavior),
+    });
   };
 
   const navLinks: { label: string; page: PageView }[] = [

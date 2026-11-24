@@ -71,6 +71,8 @@ const MENU_PRICE_OVERRIDES: Record<string, { price: string; numericPrice: number
   'sprite-can': { price: '£2.00', numericPrice: 2 },
   'ribena-bottle': { price: '£2.00', numericPrice: 2 },
   'still-water': { price: '£1.00', numericPrice: 1 },
+  'okoro-assorted-prawns-soup': { price: '£20.00', numericPrice: 20 },
+  'banga-assorted-soup': { price: '£20.00', numericPrice: 20 },
 };
 
 const MENU_DISHES: Dish[] = [

@@ -13,11 +13,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
   const handleNav = (page: PageView) => {
     onNavigate(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   };
 
   return (
-    <footer id="contact" className="bg-[#050604] border-t border-[#d8ad53]/25 text-[#f6f0e4]">
+    <footer id="site-footer" className="bg-[#050604] border-t border-[#d8ad53]/25 text-[#f6f0e4]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-14">
           {/* Brand Info */}
